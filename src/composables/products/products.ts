@@ -1,0 +1,51 @@
+export const productList = [
+  {
+    id: "1",
+    name: "Salsa African Attire",
+    price: 129,
+    uploadDate: "Uploaded Aug 3, 2023",
+    status: "Processing",
+    category: "men",
+  },
+  {
+    id: "2",
+    name: "Salsa African Attire",
+    price: 129,
+    uploadDate: "Uploaded Aug 3, 2023",
+    status: "Draft",
+    category: "women",
+  },
+  {
+    id: "3",
+    name: "Salsa African Attire",
+    price: 129,
+    uploadDate: "Uploaded Aug 3, 2023",
+    status: "out of stock",
+    category: "kids",
+  },
+
+  {
+    id: "4",
+    name: "Salsa African Attire",
+    price: 129,
+    uploadDate: "Uploaded Aug 3, 2023",
+    status: "Processing",
+    category: "kids",
+  },
+  {
+    id: "5",
+    name: "Salsa African Attire",
+    price: 129,
+    uploadDate: "Uploaded Aug 3, 2023",
+    status: "on-sale",
+    category: "men",
+  },
+  {
+    id: "6",
+    name: "Salsa African Attire",
+    price: 129,
+    uploadDate: "Uploaded Aug 3, 2023",
+    status: "on-sale",
+    category: "women",
+  },
+];
