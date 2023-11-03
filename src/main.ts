@@ -4,6 +4,5 @@ import router from "./router";
 import store from "./store";
 import "./assets/tailwind.css";
 import "./assets/main.scss";
-import CKEditor from "@ckeditor/ckeditor5-vue";
 
-createApp(App).use(store).use(router).use(CKEditor).mount("#app");
+createApp(App).use(store).use(router).mount("#app");
