@@ -13,7 +13,7 @@
         <router-link
           to="/login/vehicle-driver"
           v-show="!loggedIn"
-          class="text-sm border rounded-md text-[#034592] border-[#034592] py-2 px-4"
+          class="text-sm border rounded-md text-primary6 border-primary6 py-2 px-4"
           >Log In</router-link
         >
         <router-link

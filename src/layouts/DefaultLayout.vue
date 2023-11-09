@@ -15,7 +15,7 @@
     </div>
     <div class="flex">
       <TopNav />
-      <main class="main" id="app">
+      <main class="main-2" id="app">
         <slot />
       </main>
     </div>
@@ -34,7 +34,7 @@ const toggleSidebar = () => {
 </script>
 
 <style lang="scss">
-.main {
+.main-2 {
   padding-top: 60px;
   @media (max-width: 768px) {
     margin-left: 0;

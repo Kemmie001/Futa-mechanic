@@ -25,7 +25,7 @@ const showHeroImage = (num: number) => {
         </button>
       </div>
       <div class="md:w-6/12 w-full overflow-hidden">
-        <!-- <div class="bg-[#E3F1FF] w-[calc(100%-176px)] h-10 float-right"></div> -->
+        <!-- <div class="bg-primaryI w-[calc(100%-176px)] h-10 float-right"></div> -->
         <transition name="slide-left" mode="out-in">
           <img
             v-if="heroImage === 1"
@@ -49,7 +49,7 @@ const showHeroImage = (num: number) => {
         </transition>
 
         <div
-          class="bg-[#E3F1FF] cursor-pointer rounded-md w-[calc(100%-176px)] pl-4 items-center h-24 float-right flex justify-around"
+          class="bg-primaryI cursor-pointer rounded-md w-[calc(100%-176px)] pl-4 items-center h-24 float-right flex justify-around"
         >
           <div class="" @click="showHeroImage(1)">
             <img
@@ -82,7 +82,7 @@ const showHeroImage = (num: number) => {
         </div>
       </div>
     </div>
-    <div class="px-8 md:px-24 bg-[#E3F1FF] my-20 py-10 md:py-16">
+    <div class="px-8 md:px-24 bg-primaryI my-20 py-10 md:py-16">
       <h3
         class="font-bold text-3xl md:text-4xl text-center md:w-10/12 lg:w-8/12 mx-auto"
       >
@@ -158,7 +158,7 @@ const showHeroImage = (num: number) => {
     </div>
     <div class="px-8 md:px-24 my-20">
       <div class="md:w-10/12 lg:w-8/12 mx-auto text-center">
-        <h3 class="font-bold text-3xl md:text-4xl text-[#001633);]">
+        <h3 class="font-bold text-3xl md:text-4xl text-primary9">
           Get Access To Diverse Services
         </h3>
         <p class="py-2 text-lg leading-8 md:font-medium">
@@ -174,37 +174,37 @@ const showHeroImage = (num: number) => {
         />
         <div class="flex flex-col gap-5 md:hidden">
           <div
-            class="bg-[#E3F1FF] rounded-md py-4 text-[#034592] leading-8 flex justify-center items-center"
+            class="bg-primaryI rounded-md py-4 text-primary6 leading-8 flex justify-center items-center"
           >
             <p>Task Scheduling</p>
           </div>
           <div
-            class="bg-[#E3F1FF] rounded-md py-4 text-[#034592] leading-8 flex justify-center items-center"
+            class="bg-primaryI rounded-md py-4 text-primary6 leading-8 flex justify-center items-center"
           >
             <p>Repair Requests</p>
           </div>
           <div
-            class="bg-[#E3F1FF] rounded-md py-4 text-[#034592] leading-8 flex justify-center items-center"
+            class="bg-primaryI rounded-md py-4 text-primary6 leading-8 flex justify-center items-center"
           >
             <p>GPS Tracking</p>
           </div>
           <div
-            class="bg-[#E3F1FF] rounded-md py-4 text-[#034592] leading-8 flex justify-center items-center"
+            class="bg-primaryI rounded-md py-4 text-primary6 leading-8 flex justify-center items-center"
           >
             <p>Inspection Checklist</p>
           </div>
           <div
-            class="bg-[#E3F1FF] rounded-md py-4 text-[#034592] leading-8 flex justify-center items-center"
+            class="bg-primaryI rounded-md py-4 text-primary6 leading-8 flex justify-center items-center"
           >
             <p>Customized reporting</p>
           </div>
           <div
-            class="bg-[#E3F1FF] rounded-md py-4 text-[#034592] leading-8 flex justify-center items-center"
+            class="bg-primaryI rounded-md py-4 text-primary6 leading-8 flex justify-center items-center"
           >
             <p>Invetory Management</p>
           </div>
           <div
-            class="bg-[#E3F1FF] rounded-md py-4 text-[#034592] leading-8 flex justify-center items-center"
+            class="bg-primaryI rounded-md py-4 text-primary6 leading-8 flex justify-center items-center"
           >
             <p>Managing work Orders</p>
           </div>
@@ -227,7 +227,7 @@ const showHeroImage = (num: number) => {
         </button>
       </div>
       <div
-        class="md:flex justify-between items-center py-5 px-4 my-10 bg-[#E3F1FF] rounded-md"
+        class="md:flex justify-between items-center py-5 px-4 my-10 bg-primaryI rounded-md"
       >
         <div class="text-white flex gap-4 text-sm">
           <span

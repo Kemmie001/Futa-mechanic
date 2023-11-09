@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import DashboardLayout from "@/layouts/DashboardLayout.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,6 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { layout: DefaultLayout },
     component: HomeView,
   },
+  // Authentication pages
   {
     path: "/register-as",
     name: "register-as",
@@ -107,6 +109,32 @@ const routes: Array<RouteRecordRaw> = [
       import(
         /* webpackChunkName: "sigin page" */ "../views/Auth/AwaitVerification.vue"
       ),
+  },
+  // Dashboard
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    meta: { layout: DashboardLayout },
+    component: () =>
+      import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
+  },
+  {
+    path: "/maintenance",
+    name: "maintenance-dashboard",
+    meta: { layout: DashboardLayout },
+    component: () =>
+      import(
+        /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDashboard.vue"
+      ),
+  },
+  {
+    path: "/:slug",
+    name: "maintenance-slug",
+    component: () =>
+      import(
+        /* webpackChunkName: "Dashboard" */ "../views/maintenance/[slug].vue"
+      ),
+    meta: { layout: DashboardLayout },
   },
 ];
 

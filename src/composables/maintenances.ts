@@ -1,0 +1,88 @@
+export const maintenanceList = [
+  {
+    id: "#FUTAWORK0011",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "In Shop",
+  },
+  {
+    id: "#FUTAWORK0511",
+    concern: "Regular maintenance.............",
+    milage: 1200,
+    personnel: "",
+    status: "Pending",
+  },
+  {
+    id: "#FUTAWORK0041",
+    concern: "Faulty brake pad.............",
+    milage: 1200,
+    personnel: "Engr Oladimeji",
+    status: "In Progress",
+  },
+
+  {
+    id: "#FUTAWORK0081",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "In Shop",
+  },
+  {
+    id: "#FUTAWORK0091",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "In Shop",
+  },
+  {
+    id: "#FUTAWORK0071",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "In Shop",
+  },
+  {
+    id: "#FUTAWORK0012",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "In Shop",
+  },
+  {
+    id: "#FUTAWORK0013",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "In Shop",
+  },
+  {
+    id: "#FUTAWORK0014",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "Completed",
+  },
+
+  {
+    id: "#FUTAWORK0019",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "Completed",
+  },
+  {
+    id: "#FUTAWORK0015",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "Completed",
+  },
+  {
+    id: "#FUTAWORK0016",
+    concern: "Change oil in the engine........",
+    milage: 1200,
+    personnel: "Engr Rasheed",
+    status: "Completed",
+  },
+];
