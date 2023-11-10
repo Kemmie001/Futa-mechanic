@@ -131,7 +131,7 @@ const signUpData = ref({
             required
           />
         </div>
-        <p class="text-sm text-[#667185]">Must be at least 8 characters</p>
+        <p class="text-sm text-gray5">Must be at least 8 characters</p>
         <button class="btn-primary w-full mt-8 py-4">Create account</button>
       </form>
     </div>

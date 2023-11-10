@@ -7,7 +7,7 @@ import UpcomingMaintenance from "@/components/UpcomingMaintenance.vue";
     <div class="lg:w-7/12">
       <div class="py-5">
         <h2 class="font-bold text-primary9 text-2xl">Welcome Oluwakemi</h2>
-        <p class="text-base text-[#475367] py-1">
+        <p class="text-base text-gray6 py-1">
           It’s a sunny day today, we hope to assist you on your car maintenance
           journey
         </p>

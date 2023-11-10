@@ -65,7 +65,7 @@ const props = defineProps({
 <template>
   <div>
     <ul class="pagination my-10 flex gap-2 justify-between">
-      <p class="text-[#667185] text-sm font-semibold">Page 1 of 30</p>
+      <p class="text-gray5 text-sm font-semibold">Page 1 of 30</p>
 
       <div class="flex gap-4">
         <template v-for="(i, y) in pages">
