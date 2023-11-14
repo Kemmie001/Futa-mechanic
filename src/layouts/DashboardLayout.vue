@@ -50,6 +50,13 @@
         </div>
         <slot />
       </main>
+      <div class="">
+        <NotificationModal
+          :open="openNotificationModal"
+          :close="showNotificationModal"
+          :show-notification-modal="showNotificationModal"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +65,7 @@
 // import NotificationCard from "@/components/modals/NotificationCard.vue";
 import { ref } from "vue";
 // import { useRoute } from "vue-router";
+import NotificationModal from "../components/Modal/NotificationModal.vue";
 import SideBar from "../components/navigations/side/SideBar.vue";
 const toggleSidebar = () => {
   const sidebar = document.getElementById("sidebar");
@@ -65,6 +73,7 @@ const toggleSidebar = () => {
 };
 const openNotificationModal = ref(false);
 const showNotificationModal = () => {
+  console.log("hey");
   openNotificationModal.value = !openNotificationModal.value;
 };
 // const route = useRoute();
