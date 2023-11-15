@@ -15,7 +15,7 @@ const http = axios.create({
 http.interceptors.request.use(
   (config: any) => {
     config.headers["Authorization"] = `Bearer ${window.localStorage.getItem(
-      "token"
+      "futaToken"
     )}`;
     return config;
   },

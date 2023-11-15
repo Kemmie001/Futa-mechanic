@@ -97,7 +97,7 @@ const { barChartProps, barChartRef } = useBarChart({
 });
 
 // pie chart
-const serviceValues = ref([30, 40, 60, 70, 5]);
+const serviceValues = ref([30, 40, 60, 70]);
 const serviceLabels = ref([
   "Tyre Change",
   "Brake Pad Repair",

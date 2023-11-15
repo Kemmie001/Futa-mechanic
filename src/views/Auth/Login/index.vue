@@ -1,10 +1,39 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useErrorInfo } from "@/store/error";
+import { logMeIn } from "@/service/endpoints";
+const router = useRouter();
 
-const signUpData = ref({
+const loginData = ref({
   password: "",
-  staffID: "",
+  email: "",
 });
+const customError = useErrorInfo();
+const emits = defineEmits(["updateErrorMessage"]);
+
+const roller = ref(false);
+const loginForm = async () => {
+  // signUpData.phone.value = "this.countryCode + this.phoneNumber";
+  try {
+    roller.value = true;
+    const { data } = await logMeIn(loginData.value);
+
+    loginData.value.email = "";
+    loginData.value.password = "";
+    localStorage.setItem("futaToken", await data.token);
+    router.push("/dashboard");
+  } catch (e) {
+    const error = e as any;
+    console.log(error);
+    customError.updateErrorMsg(
+      error?.response?.data?.message ?? "An error occurred",
+      false
+    );
+  } finally {
+    roller.value = false;
+  }
+};
 </script>
 
 <template>
@@ -16,7 +45,8 @@ const signUpData = ref({
         <p class="font-bold text-2xl">FUTA</p>
       </div>
       <h6 class="auth-header mt-16">
-        Are you wanting to stay connected with your vehicle ?
+        Get ready to revolutionizes how you track, schedule, and log maintenance
+        tasks.
       </h6>
       <p class="py-2 text-lg">
         Start managing your maintenance needs with our user-friendly app.
@@ -53,16 +83,16 @@ const signUpData = ref({
           >
         </span>
       </div>
-      <form class="mt-8">
+      <form @submit.prevent="loginForm" class="mt-8">
         <div class="form-input2">
           <span class="flex gap-1">
-            <label for="staff-id">Staff ID</label>
+            <label for="email">Email Address</label>
           </span>
           <input
             class="form-field"
-            type="text"
-            name="staff-id"
-            v-model="signUpData.staffID"
+            type="email"
+            name="email"
+            v-model="loginData.email"
             required
           />
         </div>
@@ -72,13 +102,21 @@ const signUpData = ref({
           </span>
           <input
             class="form-field"
-            type="text"
+            type="password"
             name="password"
-            v-model="signUpData.password"
+            v-model="loginData.password"
             required
           />
         </div>
-        <button class="btn-primary w-full mt-8 py-4">Login</button>
+        <button
+          :disabled="roller"
+          type="submit"
+          class="w-full mt-8 py-3 flex btn-primary items-center justify-center gap-2"
+          :class="[roller ? 'opacity-75' : '']"
+        >
+          <div v-if="roller" class="animate-spin roller"></div>
+          Login
+        </button>
       </form>
       <div class="flex gap-2 justify-center text-sm items-center my-5">
         <p class="text-[#645D5D]">Forgot Password?</p>

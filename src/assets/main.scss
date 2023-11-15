@@ -172,3 +172,12 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 /* ... */
+
+.roller {
+  height: 15px;
+  width: 15px;
+  border-color: rgb(195, 195, 195);
+  border-top-color: #1671d9;
+  border-radius: 50%;
+  border-width: 4px;
+}

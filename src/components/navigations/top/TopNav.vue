@@ -11,7 +11,7 @@
 
       <div class="flex items-center gap-4">
         <router-link
-          to="/login/vehicle-driver"
+          to="/login"
           v-show="!loggedIn"
           class="text-sm border rounded-md text-primary6 border-primary6 py-2 px-4"
           >Log In</router-link

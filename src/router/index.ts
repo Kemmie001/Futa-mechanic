@@ -21,57 +21,21 @@ const routes: Array<RouteRecordRaw> = [
   },
 
   {
-    path: "/register/vehicle-owner",
+    path: "/register/:slug",
     meta: { layout: AuthLayout },
-    name: "vehicle-owner",
+    name: "register",
     component: () =>
       import(
-        /* webpackChunkName: "vehicle-owner" */ "../views/Auth/Register/VehicleOwner.vue"
+        /* webpackChunkName: "vehicle-owner" */ "../views/Auth/Register/[slug].vue"
       ),
   },
   {
-    path: "/login/vehicle-owner",
+    path: "/login",
     meta: { layout: AuthLayout },
-    name: "login-vehicle-owner",
+    name: "login",
     component: () =>
       import(
-        /* webpackChunkName: "vehicle-owner" */ "../views/Auth/Login/VehicleOwner.vue"
-      ),
-  },
-  {
-    path: "/register/vehicle-driver",
-    meta: { layout: AuthLayout },
-    name: "vehicle-Driver",
-    component: () =>
-      import(
-        /* webpackChunkName: "vehicle-Driver" */ "../views/Auth/Register/VehicleDriver.vue"
-      ),
-  },
-  {
-    path: "/login/maintenance-personnel",
-    meta: { layout: AuthLayout },
-    name: "login-maintenance-personnel",
-    component: () =>
-      import(
-        /* webpackChunkName: "vehicle-Driver" */ "../views/Auth/Login/MaintenancePersonnel.vue"
-      ),
-  },
-  {
-    path: "/register/maintenance-personnel",
-    meta: { layout: AuthLayout },
-    name: "maintenance-personnel",
-    component: () =>
-      import(
-        /* webpackChunkName: "vehicle-Driver" */ "../views/Auth/Register/MaintenancePersonnel.vue"
-      ),
-  },
-  {
-    path: "/login/vehicle-driver",
-    meta: { layout: AuthLayout },
-    name: "login-vehicle-Driver",
-    component: () =>
-      import(
-        /* webpackChunkName: "vehicle-Driver" */ "../views/Auth/Login/VehicleDriver.vue"
+        /* webpackChunkName: "vehicle-owner" */ "../views/Auth/Login/index.vue"
       ),
   },
   {

@@ -6,6 +6,7 @@
         params: { slug: props.id },
       })
     "
+    class="hover:bg-primaryI cursor-pointer"
   >
     <td class="table__image py-5 px-2">
       <p class="text-xs w-32">{{ props.id }}</p>

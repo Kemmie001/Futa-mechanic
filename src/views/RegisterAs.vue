@@ -26,9 +26,9 @@ const showHeroImage = (num: number) => {
             registering as
           </p>
         </div>
-        <div class="flex flex-col md:flex-row gap-5 my-5">
+        <div class="gap-5 my-5 grid md:grid-cols-2 lg:grid-cols-3">
           <router-link
-            to="/register/maintenance-personnel"
+            to="/register/maintenance_personnel"
             class="bg-white box rounded-md px-3 py-4"
           >
             <h6 class="font-medium text-md py-2">Maintenance Personnel</h6>
@@ -38,7 +38,7 @@ const showHeroImage = (num: number) => {
             </p>
           </router-link>
           <router-link
-            to="/register/vehicle-driver"
+            to="/register/driver"
             class="bg-white box rounded-md hover:text-primary px-4 py-4"
           >
             <h6 class="font-medium text-md py-2">Vehicle Driver</h6>
@@ -48,7 +48,7 @@ const showHeroImage = (num: number) => {
             </p>
           </router-link>
           <router-link
-            to="/register/vehicle-owner"
+            to="/register/vehicle_asignee"
             class="bg-white box rounded-md hover:text-primary px-4 py-4"
           >
             <h6 class="font-medium text-md py-2">Vehicle Owner</h6>
@@ -66,17 +66,13 @@ const showHeroImage = (num: number) => {
 <style lang="scss" scoped>
 .box {
   border: 0.884px solid #d2d2d2;
-  height: 170px;
-  width: 33%;
+  height: 175px;
   color: #001633;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @include sm {
-    width: 100%;
-  }
 }
 .box:hover {
   border: 0.884px solid #1671d9;

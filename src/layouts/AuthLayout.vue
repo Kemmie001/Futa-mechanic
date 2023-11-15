@@ -1,7 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CustomToast from "@/components/CustomToast.vue";
+</script>
 
 <template>
   <div>
+    <custom-toast />
     <router-view></router-view>
   </div>
 </template>
