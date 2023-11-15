@@ -15,14 +15,17 @@ const showHeroImage = (num: number) => {
         <h1 class="home-heading text-dark">
           Efficient Vehicle Management Made Easy
         </h1>
-        <p class="text-sm md:text-md lg:text-lg my-3 md:my-6">
+        <p class="text-sm md:text-md lg:text-lg mt-3 mb-10 md:mt-6">
           From preventive maintenance scheduling to repair tracking, this system
           is designed to simplified to allow you experience seamless management
           and enhanced productivity.
         </p>
-        <button class="px-6 mt-2 py-4 text-md font-medium btn-primary">
+        <router-link
+          to="/register-as"
+          class="px-6 m py-4 text-md font-medium btn-primary"
+        >
           Create an Account
-        </button>
+        </router-link>
       </div>
       <div class="md:w-6/12 w-full overflow-hidden">
         <!-- <div class="bg-primaryI w-[calc(100%-176px)] h-10 float-right"></div> -->
