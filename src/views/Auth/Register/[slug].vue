@@ -56,9 +56,9 @@ const signupForm = async () => {
 </script>
 
 <template>
-  <div class="flex p-4 md:gap-10 lg:gap-14]">
+  <div class="flex p-4 md:gap-10 lg:gap-14">
     <div
-      class="auth-bg h-[100vh text-white rounded-3xl px-10 hidden md:block md:w-6/12 lg:w-5/12 py-8 relative"
+      class="auth-bg h-[100vh] text-white rounded-3xl px-10 hidden md:block md:w-6/12 lg:w-5/12 py-8 relative"
     >
       <div class="">
         <p class="font-bold text-2xl">FUTA</p>
@@ -91,7 +91,7 @@ const signupForm = async () => {
         </div>
       </div>
     </div>
-    <div class="w-full md:w-6/12 py-8 px-8 md:px-20">
+    <div class="w-full md:w-6/12 py-8 px-8 md:px-10 lg:px-20">
       <div class="mb-4">
         <h6 class="text-dark text-3xl mb-2 font-semibold">Create Account</h6>
         <span class="flex gap-2">

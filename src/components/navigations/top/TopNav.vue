@@ -3,10 +3,10 @@
     <nav class="w-full bg-white flex justify-between items-center">
       <div class="flex gap-8 items-center">
         <router-link to="/" class="flex items-center gap-2"> Futa </router-link>
-        <router-link to="/" class="text-sm">Home</router-link>
+        <!-- <router-link to="/" class="text-sm">Home</router-link> -->
         <router-link to="/dashboard" class="text-sm">Maintenance</router-link>
-        <router-link to="/" class="text-sm">FAQ</router-link>
-        <router-link to="/" class="text-sm">Contact us</router-link>
+        <!-- <router-link to="/" class="text-sm">FAQ</router-link> -->
+        <!-- <router-link to="/" class="text-sm">Contact us</router-link> -->
       </div>
 
       <div class="flex items-center gap-4">

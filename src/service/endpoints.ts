@@ -6,8 +6,8 @@ export function logMeIn(data: object) {
   return httpBase.post("/auth/login", data);
 }
 export const isLoggedIn = () => {
-  let user = window.localStorage.getItem("revv-user");
-  user = user ? JSON.parse(user) : false;
+  let user = window.localStorage.getItem("futaToken");
+  // user = user ? JSON.parse(user) : false;
   return user;
 };
 export const setUser = (data: any) => {

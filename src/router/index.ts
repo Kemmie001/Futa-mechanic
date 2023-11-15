@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
+import { isLoggedIn } from "@/service/endpoints";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -105,6 +106,20 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+const openRoutes = [
+  "home",
+  "register-as",
+  "register",
+  "login",
+  "forgot-password",
+];
+router.beforeEach(async (to: any, from, next) => {
+  if (!openRoutes.includes(to.name) && !isLoggedIn()) next({ name: "login" });
+
+  next();
+  // if (to.name === 'Login' && isLoggedIn()) next({ name: 'dashboard' });
 });
 
 export default router;
