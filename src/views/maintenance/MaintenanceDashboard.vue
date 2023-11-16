@@ -8,7 +8,7 @@
         >
       </div>
     </div>
-    <div class="flex text-[#344054] justify-between items-center">
+    <div class="md:flex text-[#344054] justify-between items-center">
       <div class="my-4 font-light md:flex gap-5 justify-between">
         <div
           class="border border-[#D0D5DD] rounded-[8px] px-2 py-2 flex items-center gap-2"
@@ -17,7 +17,7 @@
           <input type="search" class="outline-none" placeholder="Search here" />
         </div>
         <button
-          class="flex px-2 py-2 items-center border border-[#D0D5DD] rounded-[8px] gap-2"
+          class="flex px-2 py-2 mt-4 md:mt-0 items-center border border-[#D0D5DD] rounded-[8px] gap-2"
         >
           <img src="../../assets/icons/filter.png" alt="filter" />
           <p>Filter</p>

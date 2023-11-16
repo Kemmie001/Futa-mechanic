@@ -83,8 +83,49 @@ const route = useRoute();
             </p>
           </div>
         </div>
-        <div class="border border-[#E4E7EC] rounded-md">
+        <div class="border border-[#E4E7EC] rounded-md mt-5 p-4">
           <p class="text-sm text-gray5 pb-1">Status</p>
+        </div>
+      </div>
+      <div class="w-full md:w-6/12 mt-4">
+        <div class="border border-[#E4E7EC] rounded-md p-4">
+          <h3 class="text-primary9 font-semibold text-xl">
+            Personnel Feedback
+          </h3>
+          <ul class="flex flex-col gap-6 mt-5">
+            <li class="flex flex-col gap-1">
+              <p class="text-md font-medium text-[#101928]">Vehicle Type:</p>
+              <p class="text-sm text-gray5 font-normal">
+                No report available.
+              </p>
+            </li>
+            <li class="flex flex-col gap-1">
+              <p class="tex-md font-medium text-[#101928]">Repair done:</p>
+              <p class="text-sm text-gray5 font-normal">
+                No report available.
+              </p>
+            </li>
+            <li class="flex flex-col gap-1">
+              <p class="text-md font-medium text-[#101928]">Report:</p>
+              <p class="text-sm text-gray5 font-normal">
+                No report available.
+              </p>
+            </li>
+            <li class="flex flex-col gap-1">
+              <p class="text-md font-medium text-[#101928]">Day Completed:</p>
+              <p class="text-sm text-gray5 font-normal">
+                No report available.
+              </p>
+            </li>
+            <li class="flex flex-col gap-3">
+              <p class="text-md font-medium text-[#101928]">Image Report:</p>
+              <div
+                class="rounded-md bg-primaryI h-[150px] w-full flex justify-center items-center"
+              >
+                <p class="font-medium">No image yet</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
