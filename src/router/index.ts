@@ -101,6 +101,13 @@ const routes: Array<RouteRecordRaw> = [
       ),
     meta: { layout: DashboardLayout },
   },
+  {
+    path: "/vehicle",
+    name: "vehicle-dashboard",
+    meta: { layout: DashboardLayout },
+    component: () =>
+      import(/* webpackChunkName: "Dashboard" */ "../views/Vehicle/index.vue"),
+  },
 ];
 
 const router = createRouter({

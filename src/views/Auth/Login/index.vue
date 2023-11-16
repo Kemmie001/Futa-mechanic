@@ -7,7 +7,7 @@ const router = useRouter();
 
 const loginData = ref({
   password: "",
-  email: "",
+  email_staffId: "",
 });
 const customError = useErrorInfo();
 const emits = defineEmits(["updateErrorMessage"]);
@@ -19,7 +19,7 @@ const loginForm = async () => {
     roller.value = true;
     const { data } = await logMeIn(loginData.value);
 
-    loginData.value.email = "";
+    loginData.value.email_staffId = "";
     loginData.value.password = "";
     localStorage.setItem("futaToken", await data.token);
     router.push("/dashboard");
@@ -92,7 +92,7 @@ const loginForm = async () => {
             class="form-field"
             type="email"
             name="email"
-            v-model="loginData.email"
+            v-model="loginData.email_staffId"
             required
           />
         </div>

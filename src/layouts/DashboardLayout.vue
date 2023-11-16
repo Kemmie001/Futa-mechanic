@@ -7,7 +7,7 @@
         <img class="w-full" src="../assets/icons/menu.svg" alt="" />
       </button>
       <div class="w-20">
-        <img class="w-full" src="../assets/Karpah.svg" alt="" />
+        <h1>FUTA</h1>
       </div>
       <div class="">
         <img class="w-full" src="../assets/icons/notification.svg" alt="" />

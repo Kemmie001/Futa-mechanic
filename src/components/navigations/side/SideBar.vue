@@ -28,9 +28,6 @@
               </span>
               <input type="search" placeholder="Search here" />
             </div>
-            <div class="">
-              <button class="btn-secondary w-full py-2">View Shop</button>
-            </div>
           </div>
           <router-link to="/dashboard"
             ><i class="fa-solid fa-house"></i>Dashboard
@@ -47,6 +44,9 @@
           </router-link>
           <router-link to="/"
             ><i class="fa-solid fa-car"></i> Assigned Driver
+          </router-link>
+          <router-link to="/vehicle"
+            ><i class="fa-solid fa-car"></i> Vehicle
           </router-link>
         </ul>
         <nav>
