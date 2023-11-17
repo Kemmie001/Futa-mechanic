@@ -139,7 +139,7 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
         >
           <h2 class="font-bold text-primary5 text-xl">0567</h2>
           <p class="font-medium text-sm text-primary">
-            Total Maintenance Performed
+            Major Maintenance Activities
           </p>
         </div>
         <div
@@ -153,7 +153,7 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
         >
           <h2 class="font-bold text-primary5 text-xl">1024</h2>
           <p class="font-medium text-sm text-primary">
-            Total Mileage (km)
+            Total Vehicle Mileage (km)
           </p>
         </div>
         <div
@@ -161,7 +161,7 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
         >
           <h2 class="font-bold text-primary5 text-xl">200</h2>
           <p class="font-medium text-sm text-primary">
-            Last Recorded Mileage (km)
+            Last Recorded Vehicle Mileage (km)
           </p>
         </div>
         <div
@@ -177,7 +177,7 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
         >
           <h2 class="font-bold text-primary5 text-xl">13 Nov, 2023</h2>
           <p class="font-medium text-sm text-primary">
-            Next Maintenance
+            Next Maintenance Activity
           </p>
         </div>
       </div>

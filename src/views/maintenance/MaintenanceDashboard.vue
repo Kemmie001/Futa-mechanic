@@ -1,11 +1,11 @@
 <template>
   <div class="px-5 md:px-8">
     <div class="flex justify-between py-4">
-      <h1 class="">Maintenance</h1>
+      <h1 class="">Maintenance Activities</h1>
       <div class="flex gap-4 cursor-pointer items-center">
-        <router-link to="/" class="btn-primary py-2 px-5"
-          >Plan Maintenance</router-link
-        >
+        <button @click="showPlanMaintenanceModal" class="btn-primary py-2 px-5">
+          Plan Maintenance
+        </button>
       </div>
     </div>
     <div class="md:flex text-[#344054] justify-between items-center">
@@ -80,10 +80,15 @@
         <Pagination v-model="page" :rows-number="rows" :rows-per-page="5" />
       </div>
     </div>
+    <PlanMaintenance
+      :close="showPlanMaintenanceModal"
+      :open="openPlanMaintenanceModal"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import PlanMaintenance from "@/components/Modal/planMaintenance.vue";
 import { maintenanceList } from "../../composables/maintenances";
 import maintenanceRow from "@/components/maintenance/MaintenanceRow.vue";
 import Pagination from "@/components/pagination.vue";
@@ -91,6 +96,11 @@ import { ref } from "vue";
 const productList: any[] = [];
 const page = ref(1);
 const rows = ref(0);
+const openPlanMaintenanceModal = ref(false);
+const showPlanMaintenanceModal = () => {
+  console.log("hey");
+  openPlanMaintenanceModal.value = !openPlanMaintenanceModal.value;
+};
 </script>
 
 <style lang="scss">

@@ -14,7 +14,7 @@ const route = useRoute();
         <i class="fa-solid fa-arrow-left"></i>
       </button>
       <p class="">Go Back</p>
-      <span class="flex gap-1">
+      <span class="flex gap-2">
         <p>Maintenance</p>
         /
         <p class="text-primary">Info Page</p>
@@ -22,8 +22,8 @@ const route = useRoute();
     </div>
     <div class="flex justify-between items-center">
       <span class="flex flex-col">
-        <h3 class="text-primary9 font-bold text-2xl">
-          {{ route.params.slug }}
+        <h3 class="text-primary9 font-bold text-xl">
+          #{{ route.params.slug }}
         </h3>
         <p class="text-base text-gray6">Maintenance ID</p>
       </span>
@@ -31,7 +31,7 @@ const route = useRoute();
         Export
       </button>
     </div>
-    <div class="md:flex gap-2">
+    <div class="md:flex gap-2 mt-5">
       <div class="w-full md:w-6/12 mt-4">
         <div class="border border-[#E4E7EC] rounded-md">
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -85,6 +85,16 @@ const route = useRoute();
         </div>
         <div class="border border-[#E4E7EC] rounded-md mt-5 p-4">
           <p class="text-sm text-gray5 pb-1">Status</p>
+          <ul class="flex flex-col my-5">
+            <li class="flex gap-4 items-center">
+              <span
+                class="flex justify-center bg-primary text-white font-medium text-lg items-center w-10 h-10 rounded-full"
+                >1
+              </span>
+              <p class="text-primary font-semibold">Pending</p>
+            </li>
+            <li class="h-5 w-20 border-l border-primaryI ml-5"></li>
+          </ul>
         </div>
       </div>
       <div class="w-full md:w-6/12 mt-4">
@@ -92,26 +102,26 @@ const route = useRoute();
           <h3 class="text-primary9 font-semibold text-xl">
             Personnel Feedback
           </h3>
-          <ul class="flex flex-col gap-6 mt-5">
-            <li class="flex flex-col gap-1">
+          <ul class="flex flex-col gap-8 mt-5">
+            <li class="flex flex-col gap-2">
               <p class="text-md font-medium text-[#101928]">Vehicle Type:</p>
               <p class="text-sm text-gray5 font-normal">
                 No report available.
               </p>
             </li>
-            <li class="flex flex-col gap-1">
+            <li class="flex flex-col gap-2">
               <p class="tex-md font-medium text-[#101928]">Repair done:</p>
               <p class="text-sm text-gray5 font-normal">
                 No report available.
               </p>
             </li>
-            <li class="flex flex-col gap-1">
+            <li class="flex flex-col gap-2">
               <p class="text-md font-medium text-[#101928]">Report:</p>
               <p class="text-sm text-gray5 font-normal">
                 No report available.
               </p>
             </li>
-            <li class="flex flex-col gap-1">
+            <li class="flex flex-col gap-2">
               <p class="text-md font-medium text-[#101928]">Day Completed:</p>
               <p class="text-sm text-gray5 font-normal">
                 No report available.

@@ -9,7 +9,7 @@
     class="hover:bg-primaryI cursor-pointer"
   >
     <td class="table__image py-5 px-2">
-      <p class="text-xs w-32">{{ props.id }}</p>
+      <p class="text-xs w-32">#{{ props.id }}</p>
     </td>
     <td class="table__date">
       <p class="text-xs w-[220px] lg:w-full">{{ props.concern }}</p>

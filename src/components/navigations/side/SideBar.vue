@@ -35,18 +35,18 @@
           <router-link to="/maintenance"
             ><i class="fa-solid fa-screwdriver-wrench"></i> Maintenance
           </router-link>
+          <router-link to="/driver"
+            ><i class="fa-solid fa-user-gear"></i> Assigned Driver
+          </router-link>
+          <router-link to="/vehicle"
+            ><i class="fa-solid fa-car"></i> Vehicle
+          </router-link>
           <router-link to="/"
             ><i class="fa-solid fa-location-crosshairs"></i> GPS
             Tracker</router-link
           >
           <router-link to="/"
             ><i class="fa-solid fa-file-lines"></i> Reports
-          </router-link>
-          <router-link to="/"
-            ><i class="fa-solid fa-car"></i> Assigned Driver
-          </router-link>
-          <router-link to="/vehicle"
-            ><i class="fa-solid fa-car"></i> Vehicle
           </router-link>
         </ul>
         <nav>
