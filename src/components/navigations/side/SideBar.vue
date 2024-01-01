@@ -58,10 +58,9 @@
               <router-link to="/"
                 ><i class="fa-solid fa-headset"></i>Help Center
               </router-link>
-              <router-link to="/"
-                ><i class="fa-solid fa-arrow-right-from-bracket"></i> Log
-                Out</router-link
-              >
+              <p @click="signOut" class="cursor-pointer">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
+              </p>
             </div>
           </div>
         </nav>
@@ -71,16 +70,21 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { watch } from "vue";
 
 const closeSidebar = () => {
   document.querySelector<HTMLElement>("#sidebar")?.classList.remove("open");
 };
 const route = useRoute();
+const router = useRouter();
 watch(route, () => {
   document.querySelector<HTMLElement>("#sidebar")?.classList.remove("open");
 });
+const signOut = () => {
+  localStorage.removeItem("futaToken");
+  router.push({ name: "login" });
+};
 </script>
 
 <style scoped lang="scss">
