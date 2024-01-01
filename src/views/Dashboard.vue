@@ -210,7 +210,10 @@ const regInformation = regInfo().userData;
     </div>
     <div class="lg:w-5/12 bg-primaryI py-12 px-8">
       <div class="text-right w-full"></div>
-      <div class="active-driver p-4">
+      <div
+        v-if="regInformation?.role === 'vehicle_assignee'"
+        class="active-driver p-4"
+      >
         <h2 class="text-black text-lg font-semibold">Active Driver</h2>
         <div class="mx-auto my-5">
           <img
@@ -227,6 +230,26 @@ const regInformation = regInfo().userData;
           <span class="flex gap-3">
             <p class="">Staff ID:</p>
             <p class="font-semibold">FUTA/DRV/1010</p>
+          </span>
+        </div>
+      </div>
+      <div v-if="regInformation?.role === 'driver'" class="active-driver p-4">
+        <h2 class="text-black text-lg font-semibold">Assigned Owner</h2>
+        <div class="mx-auto my-5">
+          <img
+            class="w-28 h-28 object-contain mx-auto rounded-full"
+            src="../assets/sellerAvatar.png"
+            alt="driver"
+          />
+        </div>
+        <div class="mt-4 text-base">
+          <span class="flex gap-3 pb-2">
+            <p class="">Name:</p>
+            <p class="font-semibold">Isogun Oluwakemi</p>
+          </span>
+          <span class="flex gap-3">
+            <p class="">Staff ID:</p>
+            <p class="font-semibold">FUTA/STF/3910</p>
           </span>
         </div>
       </div>
