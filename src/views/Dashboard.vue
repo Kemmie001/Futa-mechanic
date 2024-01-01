@@ -3,6 +3,7 @@ import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
 import { BarChart, useBarChart } from "vue-chart-3";
 import { DoughnutChart, useDoughnutChart } from "vue-chart-3";
 import { computed, ref } from "vue";
+import { regInfo } from "@/store/register";
 type FILTEMODE = "ALLTIME" | "MONTH" | "YEAR";
 
 const filterMode = ref<FILTEMODE>("MONTH");
@@ -119,13 +120,17 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
   chartData: testData,
   options: options2,
 });
+
+const regInformation = regInfo().userData;
 </script>
 
 <template>
   <div class="flex px-8 lg:pr-0 md:pl-8 flex-col lg:flex-row gap-8">
     <div class="lg:w-7/12">
       <div class="py-5">
-        <h2 class="font-bold text-primary9 text-2xl">Welcome Oluwakemi</h2>
+        <h2 class="font-bold text-primary9 text-2xl">
+          Welcome {{ regInformation?.firstName }}
+        </h2>
         <p class="text-base text-gray6 py-1">
           It’s a sunny day today, we hope to assist you on your car maintenance
           journey
@@ -183,7 +188,7 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
       </div>
       <div class="mt-4 bg-primaryI p-4 mb-10">
         <h2 class="font-semibold text-lg text-black">
-          Maintenance Analytics
+          Maintenance Activities Analytics
         </h2>
         <div class="flex items-center gap-4">
           <!-- <select

@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useErrorInfo } from "@/store/error";
 import { logMeIn } from "@/service/endpoints";
+import { regInfo } from "@/store/register";
 const router = useRouter();
 
 const loginData = ref({
@@ -21,6 +22,7 @@ const loginForm = async () => {
 
     loginData.value.email_staffId = "";
     loginData.value.password = "";
+    regInfo().updateUserData(data.userInfo);
     localStorage.setItem("futaToken", await data.token);
     router.push("/dashboard");
   } catch (e) {
