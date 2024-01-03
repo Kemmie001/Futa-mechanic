@@ -2,8 +2,9 @@
 import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
 import { BarChart, useBarChart } from "vue-chart-3";
 import { DoughnutChart, useDoughnutChart } from "vue-chart-3";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { regInfo } from "@/store/register";
+import { userInfo } from "@/store/user";
 type FILTEMODE = "ALLTIME" | "MONTH" | "YEAR";
 
 const filterMode = ref<FILTEMODE>("MONTH");
@@ -122,6 +123,14 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
 });
 
 const regInformation = regInfo().userData;
+const userInformation = computed(() => {
+  return userInfo().userData;
+});
+onMounted(() => {
+  if (!Object.keys(userInformation.value).length) {
+    userInfo().fetchUserProfile();
+  }
+});
 </script>
 
 <template>
@@ -129,7 +138,7 @@ const regInformation = regInfo().userData;
     <div class="lg:w-7/12">
       <div class="py-5">
         <h2 class="font-bold text-primary9 text-2xl">
-          Welcome {{ regInformation?.firstName }}
+          Welcome {{ userInformation?.user?.firstName }}
         </h2>
         <p class="text-base text-gray6 py-1">
           It’s a sunny day today, we hope to assist you on your car maintenance
@@ -142,7 +151,9 @@ const regInformation = regInfo().userData;
         <div
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
-          <h2 class="font-bold text-primary5 text-xl">0567</h2>
+          <h2 class="font-bold text-primary5 text-xl">
+            {{ userInformation?.nbMaintLog }}
+          </h2>
           <p class="font-medium text-sm text-primary">
             Major Maintenance Activities
           </p>
@@ -211,7 +222,7 @@ const regInformation = regInfo().userData;
     <div class="lg:w-5/12 bg-primaryI py-12 px-8">
       <div class="text-right w-full"></div>
       <div
-        v-if="regInformation?.role === 'vehicle_assignee'"
+        v-if="userInformation?.user?.role === 'vehicle_assignee'"
         class="active-driver p-4"
       >
         <h2 class="text-black text-lg font-semibold">Active Driver</h2>
@@ -233,7 +244,7 @@ const regInformation = regInfo().userData;
           </span>
         </div>
       </div>
-      <div v-if="regInformation?.role === 'driver'" class="active-driver p-4">
+      <div v-else class="active-driver p-4">
         <h2 class="text-black text-lg font-semibold">Assigned Owner</h2>
         <div class="mx-auto my-5">
           <img
