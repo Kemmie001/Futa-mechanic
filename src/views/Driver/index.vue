@@ -2,9 +2,20 @@
 import { logList } from "../../composables/log";
 import DriverLog from "@/components/driver/DriverLog.vue";
 import { regInfo } from "@/store/register";
-import { ref } from "vue";
+import { userInfo } from "@/store/user";
+import { computed, onMounted, ref } from "vue";
 
-const regInformation = regInfo().userData;
+const roller = ref(false);
+const userInformation = computed(() => {
+  return userInfo().userData;
+});
+onMounted(async () => {
+  if (!Object.keys(userInformation.value).length) {
+    roller.value = true;
+    await userInfo().fetchUserProfile();
+    roller.value = false;
+  }
+});
 const openVehicleLogModal = ref(false);
 const showVehicleLogModal = () => {
   openVehicleLogModal.value = !openVehicleLogModal.value;
@@ -15,8 +26,9 @@ const showVehicleLogModal = () => {
   <div class="px-5 px-8">
     <div class="flex mt-8 justify-between items-center">
       <h2 class="text-3xl font-semibold">Vehicle Log</h2>
+      {{}}
       <button
-        v-if="regInformation?.role === 'driver'"
+        v-if="userInformation?.loggedInUser?.role === 'driver'"
         @click="showVehicleLogModal"
         class="btn-primary py-3 px-5"
       >
@@ -79,70 +91,97 @@ const showVehicleLogModal = () => {
         <!-- <Pagination v-model="page" :rows-number="rows" :rows-per-page="5" /> -->
       </div>
       <div
-        v-if="regInformation?.role === 'vehicle_assignee'"
+        v-if="userInformation?.loggedInUser?.role === 'vehicle_assignee'"
         class="px-4 md:w-5/12 rounded-md bg-primaryI py-5"
       >
         <h2 class="text-black text-lg font-semibold">Active Driver</h2>
-        <div class="mx-auto my-5">
-          <img
-            class="w-28 h-28 object-contain mx-auto rounded-full"
-            src="../../assets/sellerAvatar.png"
-            alt="driver"
-          />
+        <div
+          class="md:-mt-10 flex items-center justify-center h-full text-center text-sm"
+          v-if="userInformation?.assigned_driver?.err"
+        >
+          <p>No vehicle driver has been assigned to you yet</p>
         </div>
-        <div class="mt-5 text-base">
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Driver’s Name</p>
-            <p class="text-gray5 text-sm">Babatunde Abolaji</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Staff ID</p>
-            <p class="text-gray5 text-sm">FUTA/DRV/1010</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Email Address</p>
-            <p class="text-gray5 text-sm">babatundeabolaji@gmail.com</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Phone Number</p>
-            <p class="text-gray5 text-sm">08050438765</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Driver’s License Number</p>
-            <p class="text-gray5 text-sm">AKR101010AB22</p>
-          </span>
+        <div v-else>
+          <div class="mx-auto my-5">
+            <img
+              class="w-28 h-28 object-contain mx-auto rounded-full"
+              src="../../assets/sellerAvatar.png"
+              alt="driver"
+            />
+          </div>
+          <div class="mt-5 text-base">
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Driver’s Name</p>
+              <p class="text-gray5 text-sm">
+                {{ userInformation?.assigned_driver?.lastName }}
+                {{ userInformation?.assigned_driver?.firstName }}
+              </p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Staff ID</p>
+              <p class="text-gray5 text-sm">
+                {{ userInformation?.assigned_driver.staffId }}
+              </p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Email Address</p>
+              <p class="text-gray5 text-sm">
+                {{ userInformation?.assigned_driver?.email }}
+              </p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Phone Number</p>
+              <p class="text-gray5 text-sm">
+                {{ userInformation?.assigned_driver?.phone }}
+              </p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Driver’s License Number</p>
+              <!-- <p class="text-gray5 text-sm">{{userInformation?.assigned_driver?.}}</p> -->
+            </span>
+          </div>
         </div>
       </div>
       <div v-else class="px-4 md:w-5/12 rounded-md bg-primaryI py-5">
         <h2 class="text-black text-lg font-semibold">Vehicle Owner</h2>
-        <div class="mx-auto my-5">
-          <img
-            class="w-28 h-28 object-contain mx-auto rounded-full"
-            src="../../assets/sellerAvatar.png"
-            alt="driver"
-          />
+        <div
+          class="md:-mt-10 flex items-center justify-center h-full text-center text-sm"
+          v-if="userInformation?.vehicle_assignee?.err"
+        >
+          <p>No vehicle owner has been assigned to you yet</p>
         </div>
-        <div class="mt-5 text-base">
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Owner’s Name</p>
-            <p class="text-gray5 text-sm">Isogun Oluwakemi</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Position</p>
-            <p class="text-gray5 text-sm">Director</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Staff ID</p>
-            <p class="text-gray5 text-sm">FUTA/STF/1010</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Email Address</p>
-            <p class="text-gray5 text-sm">babatundeabolaji@gmail.com</p>
-          </span>
-          <span class="flex flex-col gap-2 pb-2 mb-5">
-            <p class="font-medium text-sm">Phone Number</p>
-            <p class="text-gray5 text-sm">08050438765</p>
-          </span>
+        <div v-else class="">
+          <div class="mx-auto my-5">
+            <img
+              class="w-28 h-28 object-contain mx-auto rounded-full"
+              src="../../assets/sellerAvatar.png"
+              alt="driver"
+            />
+          </div>
+          <div class="mt-5 text-base">
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Owner’s Name</p>
+              <p class="text-gray5 text-sm">
+                {{ userInformation?.vehicle_assignee?.lastName }}
+              </p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Position</p>
+              <p class="text-gray5 text-sm">Director</p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Staff ID</p>
+              <p class="text-gray5 text-sm">FUTA/STF/1010</p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Email Address</p>
+              <p class="text-gray5 text-sm">babatundeabolaji@gmail.com</p>
+            </span>
+            <span class="flex flex-col gap-2 pb-2 mb-5">
+              <p class="font-medium text-sm">Phone Number</p>
+              <p class="text-gray5 text-sm">08050438765</p>
+            </span>
+          </div>
         </div>
       </div>
     </div>
