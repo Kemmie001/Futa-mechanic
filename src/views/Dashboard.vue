@@ -123,12 +123,15 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
 });
 
 const regInformation = regInfo().userData;
+const roller = ref(false);
 const userInformation = computed(() => {
   return userInfo().userData;
 });
-onMounted(() => {
+onMounted(async () => {
   if (!Object.keys(userInformation.value).length) {
-    userInfo().fetchUserProfile();
+    roller.value = true;
+    await userInfo().fetchUserProfile();
+    roller.value = false;
   }
 });
 </script>
@@ -136,9 +139,13 @@ onMounted(() => {
 <template>
   <div class="flex px-8 lg:pr-0 md:pl-8 flex-col lg:flex-row gap-8">
     <div class="lg:w-7/12">
+      <div
+        v-if="roller"
+        class="animate-spin roller flex items-center justify-center"
+      ></div>
       <div class="py-5">
         <h2 class="font-bold text-primary9 text-2xl">
-          Welcome {{ userInformation?.user?.firstName }}
+          Welcome {{ userInformation?.loggedInUser?.firstName }}
         </h2>
         <p class="text-base text-gray6 py-1">
           It’s a sunny day today, we hope to assist you on your car maintenance
@@ -152,7 +159,11 @@ onMounted(() => {
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
           <h2 class="font-bold text-primary5 text-xl">
-            {{ userInformation?.nbMaintLog }}
+            {{
+              userInformation?.user_vehicle?.maint_logs?.length
+                ? userInformation?.user_vehicle?.maint_logs?.length
+                : 0
+            }}
           </h2>
           <p class="font-medium text-sm text-primary">
             Major Maintenance Activities
@@ -222,46 +233,73 @@ onMounted(() => {
     <div class="lg:w-5/12 bg-primaryI py-12 px-8">
       <div class="text-right w-full"></div>
       <div
-        v-if="userInformation?.user?.role === 'vehicle_assignee'"
+        v-if="userInformation?.loggedInUser?.role === 'vehicle_assignee'"
         class="active-driver p-4"
       >
         <h2 class="text-black text-lg font-semibold">Active Driver</h2>
         <div class="mx-auto my-5">
           <img
-            class="w-28 h-28 object-contain mx-auto rounded-full"
-            src="../assets/sellerAvatar.png"
+            class="w-30 h-30 object-contain bg-firstGray mx-auto rounded-full"
+            :src="userInformation?.assigned_driver?.pic"
             alt="driver"
           />
         </div>
-        <div class="mt-4 text-base">
-          <span class="flex gap-3 pb-2">
-            <p class="">Name:</p>
-            <p class="font-semibold">Babatunde Abolaji</p>
-          </span>
-          <span class="flex gap-3">
-            <p class="">Staff ID:</p>
-            <p class="font-semibold">FUTA/DRV/1010</p>
-          </span>
+        <div class="">
+          <div
+            class="py-4 text-center text-sm"
+            v-if="userInformation?.assigned_driver?.err"
+          >
+            No driver owner has been assigned to you yet
+          </div>
+          <div v-else class="mt-4 text-base">
+            <span class="flex gap-3 pb-2">
+              <p class="">Name:</p>
+              <p class="font-semibold">
+                {{ userInformation?.assigned_driver?.lastName }}
+                {{ userInformation?.assigned_driver?.firstName }}
+              </p>
+            </span>
+            <span class="flex gap-3 pb-2">
+              <p class="">Staff ID:</p>
+              <p class="font-semibold">
+                {{ userInformation?.assigned_driver?.staffId }}
+              </p>
+            </span>
+            <span class="flex gap-3 pb-2">
+              <p class="">Phone Number:</p>
+              <p class="font-semibold">
+                {{ userInformation?.assigned_driver?.phone }}
+              </p>
+            </span>
+          </div>
         </div>
       </div>
       <div v-else class="active-driver p-4">
         <h2 class="text-black text-lg font-semibold">Assigned Owner</h2>
-        <div class="mx-auto my-5">
-          <img
-            class="w-28 h-28 object-contain mx-auto rounded-full"
-            src="../assets/sellerAvatar.png"
-            alt="driver"
-          />
+        <div
+          class="py-4 text-center text-sm"
+          v-if="userInformation?.vehicle_assignee?.err"
+        >
+          No vehicle owner has been assigned to you yet
         </div>
-        <div class="mt-4 text-base">
-          <span class="flex gap-3 pb-2">
-            <p class="">Name:</p>
-            <p class="font-semibold">Isogun Oluwakemi</p>
-          </span>
-          <span class="flex gap-3">
-            <p class="">Staff ID:</p>
-            <p class="font-semibold">FUTA/STF/3910</p>
-          </span>
+        <div v-else class="">
+          <div class="mx-auto my-5">
+            <img
+              class="w-28 h-28 object-contain mx-auto rounded-full"
+              src="../assets/sellerAvatar.png"
+              alt="driver"
+            />
+          </div>
+          <div class="mt-4 text-base">
+            <span class="flex gap-3 pb-2">
+              <p class="">Name:</p>
+              <p class="font-semibold">Isogun Oluwakemi</p>
+            </span>
+            <span class="flex gap-3">
+              <p class="">Staff ID:</p>
+              <p class="font-semibold">FUTA/STF/3910</p>
+            </span>
+          </div>
         </div>
       </div>
       <div class="active-driver p-4 mt-10">
