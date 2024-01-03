@@ -10,7 +10,22 @@ export interface userDetails {
   nbMaintLog: number;
   nbPlannedMaint: number;
   planned_maint: Array<string>;
-  user: {
+  assigned_driver: {
+    __v: number;
+    _id: string;
+    createdAt: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    phone: number;
+    pic: string;
+    role: string;
+    staffId: string;
+    updatedAt: string;
+    err: string;
+  };
+  user_vehicle: any;
+  loggedInUser: {
     _id: string;
     firstName: string;
     lastName: string;
@@ -25,7 +40,8 @@ export interface userDetails {
     _v: number;
     driver: any;
   };
-  user_vehicle: any;
+
+  vehicle_assignee: any;
 }
 export interface userVehicle {
   _id: string;
@@ -59,11 +75,12 @@ export const userInfo = defineStore("profile", {
       try {
         const { data } = await getUser();
         this.userData = data;
+        console.log(this.userData);
       } catch (e) {
         const error = e as any;
         console.log(error);
         useErrorInfo().updateErrorMsg(
-          error?.response?.data?.message ?? "An error occurred",
+          error?.response?.data?.err ?? "An error occurred",
           false
         );
       } finally {
@@ -75,9 +92,9 @@ export const userInfo = defineStore("profile", {
         this.vehicleData = data.userVehicle;
       } catch (e) {
         const error = e as any;
-        console.log(error);
+        console.log(error.response);
         useErrorInfo().updateErrorMsg(
-          error?.response?.data?.message ?? "An error occurred",
+          error?.response?.data?.err ?? "An error occurred",
           false
         );
       } finally {
