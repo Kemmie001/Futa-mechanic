@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    <CustomToast />
     <div
       class="flex md:hidden justify-between px-5 py-4 items-center mobile-header w-full"
     >
@@ -67,6 +68,7 @@ import { ref } from "vue";
 // import { useRoute } from "vue-router";
 import NotificationModal from "../components/Modal/NotificationModal.vue";
 import SideBar from "../components/navigations/side/SideBar.vue";
+import CustomToast from "@/components/CustomToast.vue";
 const toggleSidebar = () => {
   const sidebar = document.getElementById("sidebar");
   sidebar?.classList.add("open");
