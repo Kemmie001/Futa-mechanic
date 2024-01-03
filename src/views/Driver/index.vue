@@ -1,11 +1,28 @@
 <script setup lang="ts">
-import { logList } from "../../composables/log.ts";
-import DriverLog from "../../components/driver/DriverLog";
+import { logList } from "../../composables/log";
+import DriverLog from "@/components/driver/DriverLog.vue";
+import { regInfo } from "@/store/register";
+import { ref } from "vue";
+
+const regInformation = regInfo().userData;
+const openVehicleLogModal = ref(false);
+const showVehicleLogModal = () => {
+  openVehicleLogModal.value = !openVehicleLogModal.value;
+};
 </script>
 
 <template>
   <div class="px-5 px-8">
-    <h2 class="mt-8 text-3xl font-semibold">Driver’s Log</h2>
+    <div class="flex mt-8 justify-between items-center">
+      <h2 class="text-3xl font-semibold">Vehicle Log</h2>
+      <button
+        v-if="regInformation?.role === 'driver'"
+        @click="showVehicleLogModal"
+        class="btn-primary py-3 px-5"
+      >
+        Vehicle Log
+      </button>
+    </div>
     <div class="flex flex-col md:flex-row gap-4 my-10">
       <div
         class="table-container md:w-7/12 border border-[#C6DDF7] py-2 rounded-md"
@@ -59,9 +76,12 @@ import DriverLog from "../../components/driver/DriverLog";
             />
           </tbody>
         </table>
-        <Pagination v-model="page" :rows-number="rows" :rows-per-page="5" />
+        <!-- <Pagination v-model="page" :rows-number="rows" :rows-per-page="5" /> -->
       </div>
-      <div class="px-4 md:w-5/12 rounded-md bg-primaryI py-5">
+      <div
+        v-if="regInformation?.role === 'vehicle_assignee'"
+        class="px-4 md:w-5/12 rounded-md bg-primaryI py-5"
+      >
         <h2 class="text-black text-lg font-semibold">Active Driver</h2>
         <div class="mx-auto my-5">
           <img
@@ -90,6 +110,38 @@ import DriverLog from "../../components/driver/DriverLog";
           <span class="flex flex-col gap-2 pb-2 mb-5">
             <p class="font-medium text-sm">Driver’s License Number</p>
             <p class="text-gray5 text-sm">AKR101010AB22</p>
+          </span>
+        </div>
+      </div>
+      <div v-else class="px-4 md:w-5/12 rounded-md bg-primaryI py-5">
+        <h2 class="text-black text-lg font-semibold">Vehicle Owner</h2>
+        <div class="mx-auto my-5">
+          <img
+            class="w-28 h-28 object-contain mx-auto rounded-full"
+            src="../../assets/sellerAvatar.png"
+            alt="driver"
+          />
+        </div>
+        <div class="mt-5 text-base">
+          <span class="flex flex-col gap-2 pb-2 mb-5">
+            <p class="font-medium text-sm">Owner’s Name</p>
+            <p class="text-gray5 text-sm">Isogun Oluwakemi</p>
+          </span>
+          <span class="flex flex-col gap-2 pb-2 mb-5">
+            <p class="font-medium text-sm">Position</p>
+            <p class="text-gray5 text-sm">Director</p>
+          </span>
+          <span class="flex flex-col gap-2 pb-2 mb-5">
+            <p class="font-medium text-sm">Staff ID</p>
+            <p class="text-gray5 text-sm">FUTA/STF/1010</p>
+          </span>
+          <span class="flex flex-col gap-2 pb-2 mb-5">
+            <p class="font-medium text-sm">Email Address</p>
+            <p class="text-gray5 text-sm">babatundeabolaji@gmail.com</p>
+          </span>
+          <span class="flex flex-col gap-2 pb-2 mb-5">
+            <p class="font-medium text-sm">Phone Number</p>
+            <p class="text-gray5 text-sm">08050438765</p>
           </span>
         </div>
       </div>
