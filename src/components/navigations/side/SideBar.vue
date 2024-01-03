@@ -36,7 +36,7 @@
             ><i class="fa-solid fa-screwdriver-wrench"></i> Maintenance
           </router-link>
           <router-link to="/driver"
-            ><i class="fa-solid fa-user-gear"></i> Assigned Driver
+            ><i class="fa-solid fa-user-gear"></i> Vehicle Log
           </router-link>
           <router-link to="/vehicle"
             ><i class="fa-solid fa-car"></i> Vehicle
@@ -72,6 +72,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
 import { watch } from "vue";
+import { regInfo } from "@/store/register";
 
 const closeSidebar = () => {
   document.querySelector<HTMLElement>("#sidebar")?.classList.remove("open");
@@ -85,6 +86,7 @@ const signOut = () => {
   localStorage.removeItem("futaToken");
   router.push({ name: "login" });
 };
+// const regInformation = regInfo().userData;
 </script>
 
 <style scoped lang="scss">
