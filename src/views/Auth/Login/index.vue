@@ -29,7 +29,7 @@ const loginForm = async () => {
     const error = e as any;
     console.log(error);
     customError.updateErrorMsg(
-      error?.response?.data?.message ?? "An error occurred",
+      error?.response?.data?.err ?? "An error occurred",
       false
     );
   } finally {
