@@ -1,13 +1,5 @@
 <template>
-  <tr
-    @click="
-      router.push({
-        name: 'maintenance-slug',
-        params: { slug: props.id },
-      })
-    "
-    class="hover:bg-primaryI cursor-pointer"
-  >
+  <tr class="hover:bg-primaryI cursor-pointer">
     <td class="table__image py-5 px-2">
       <p class="text-xs w-28">{{ props.dateStr }}</p>
     </td>

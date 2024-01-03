@@ -5,6 +5,7 @@ export function registerMe(data: object) {
 export function logMeIn(data: object) {
   return httpBase.post("/auth/login", data);
 }
+
 export const isLoggedIn = () => {
   let user = window.localStorage.getItem("futaToken");
   // user = user ? JSON.parse(user) : false;
@@ -16,3 +17,12 @@ export const setUser = (data: any) => {
   window.localStorage.setItem("revv-user", JSON.stringify(thisUser));
   return thisUser;
 };
+
+export function getUser() {
+  return http.get("/user/find-user");
+}
+
+// Vehicle
+export function getUserVehicle() {
+  return http.get("/vehicle/user-vehicle");
+}
