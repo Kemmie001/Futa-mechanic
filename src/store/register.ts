@@ -15,7 +15,7 @@ export interface userDetails {
   updatedAt: string;
   _v: number;
 }
-export const regInfo = defineStore("profile", {
+export const regInfo = defineStore("register", {
   state: () => {
     return {
       userData: {} as userDetails,
