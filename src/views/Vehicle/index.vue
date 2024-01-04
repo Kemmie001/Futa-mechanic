@@ -27,41 +27,50 @@ onMounted(async () => {
       class="flex flex-col md:flex-row gap-10 my-10"
     >
       <div>
-        <div>
-          <img src="../../assets/img/car.png" alt="car" />
+        <div class="w-[350px]">
+          <img
+            :src="vehicleData?.vehicle_image"
+            :alt="vehicleData?.vehicle_name"
+          />
         </div>
       </div>
-      <div class="">
+      <div class="capitalize">
         <p class="text-sm font-normal">{{ vehicleData?.brand }}</p>
-        <h1 class="mb-8 font-bold text-[32px]">2024 Mercedes Benz GLC</h1>
+        <h1 class="mb-8 font-bold text-[32px]">
+          {{ vehicleData?.vehicle_name }}
+        </h1>
         <div class="mt-4 text-base">
           <span class="flex items-center gap-3 pb-4">
             <p class="text-sm">Colour:</p>
-            <p class="text-lg font-semibold">Black</p>
+            <p class="text-lg font-semibold">
+              {{ vehicleData?.vehicle_color }}
+            </p>
           </span>
           <span class="flex items-center gap-3 pb-4">
             <p class="text-sm">Year Of Manufacture:</p>
-            <p class="text-lg font-semibold">2014</p>
+            <p class="text-lg font-semibold">
+              {{ vehicleData?.manufacture_year }}
+            </p>
           </span>
           <span class="flex items-center gap-3 pb-4">
             <p class="text-sm">Plate Number:</p>
-            <p class="text-lg font-semibold">{{ vehicleData.plate_no }}</p>
+            <p class="text-lg font-semibold">{{ vehicleData?.plate_no }}</p>
           </span>
           <span class="flex items-center gap-3 pb-4">
             <p class="text-sm">Engine Number:</p>
-            <p class="text-lg font-semibold">{{ vehicleData.engine_no }}</p>
+            <p class="text-lg font-semibold">{{ vehicleData?.engine_no }}</p>
           </span>
           <span class="flex items-center gap-3 pb-4">
             <p class="text-sm">Chassis Number:</p>
-            <p class="text-lg font-semibold">SV30-01692</p>
+            <p class="text-lg font-semibold">{{ vehicleData?.chasis_no }}</p>
           </span>
           <span class="flex items-center gap-3 pb-4">
             <p class="text-sm">Vehicle Type:</p>
-            <p class="text-lg font-semibold">{{ vehicleData.vehicle_type }}</p>
+            <p class="text-lg font-semibold">{{ vehicleData?.vehicle_type }}</p>
           </span>
           <span class="flex items-center gap-3 pb-4">
             <p class="text-sm">Fuel Type:</p>
-            <p class="text-lg font-semibold">Black</p>
+            <p class="text-lg font-semibold">{{ vehicleData?.fuel_type }}</p>
           </span>
         </div>
       </div>

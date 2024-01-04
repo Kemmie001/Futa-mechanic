@@ -59,8 +59,16 @@ export interface userVehicle {
   maint_logs: Array<any>;
   planned_maint: Array<any>;
   daily_log: Array<any>;
+  current_location: string;
+  chasis_no: string;
+  manufacture_year: string;
+  vehicle_name: string;
+  fuel_type: string;
+  vehicle_color: string;
+  vehicle_image: string;
   createdAt: string;
   updatedAt: string;
+
   __v: 0;
 }
 export const userInfo = defineStore("profile", {
