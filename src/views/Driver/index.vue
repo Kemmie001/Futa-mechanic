@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import VehicleLogModaal from "@/components/Modal/vehicleLogModaal.vue";
 import { logList } from "../../composables/log";
 import DriverLog from "@/components/driver/DriverLog.vue";
 import { regInfo } from "@/store/register";
@@ -185,6 +186,10 @@ const showVehicleLogModal = () => {
         </div>
       </div>
     </div>
+    <VehicleLogModaal
+      :close="showVehicleLogModal"
+      :open="openVehicleLogModal"
+    />
   </div>
 </template>
 

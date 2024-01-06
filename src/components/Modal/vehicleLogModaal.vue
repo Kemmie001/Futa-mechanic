@@ -5,10 +5,10 @@ import { defineProps } from "vue";
 const props = defineProps(["open", "close", "showActionsModal", "id"]);
 const form = ref({
   log: "morningLog",
-  concern: "",
-  mileage: 0,
-  date: "",
-  time: "",
+  startOdometer: "",
+  endOdometer: "",
+  fuelLevel: 0,
+  fuelUsed: "",
 });
 const vehicleLog = () => {};
 </script>
@@ -26,10 +26,10 @@ const vehicleLog = () => {};
         <form @submit.prevent="vehicleLog" class="mt-6">
           <div class="form-input2">
             <span class="flex gap-1">
-              <label for="email">Services</label>
+              <label for="logTime">Log Time</label>
             </span>
             <select
-              name="service"
+              name="logTimee"
               v-model="form.log"
               id="service"
               class="form-field"
@@ -38,55 +38,57 @@ const vehicleLog = () => {};
               <option value="eveningLog">Evening Log</option>
             </select>
           </div>
-          <div class="form-input2">
-            <span class="flex gap-1">
-              <label for="concern">Concern</label>
-            </span>
-            <input
-              class="form-field"
-              type="text"
-              name="concern"
-              v-model="form.concern"
-              required
-            />
+          <div v-if="form.log === 'morningLog'" class="">
+            <div class="form-input2">
+              <span class="flex gap-1">
+                <label for="sOdometer">Starting Odometer</label>
+              </span>
+              <input
+                class="form-field"
+                type="number"
+                name="sOdometer"
+                v-model="form.startOdometer"
+                required
+              />
+            </div>
+            <div class="form-input2">
+              <span class="flex gap-1">
+                <label for="fLevel">Fuel Level</label>
+              </span>
+              <input
+                class="form-field"
+                type="number"
+                name="fLevel"
+                v-model="form.fuelLevel"
+                required
+              />
+            </div>
           </div>
-          <div class="form-input2">
-            <span class="flex gap-1">
-              <label for="mileage">Mileage</label>
-            </span>
-            <input
-              class="form-field"
-              type="number"
-              name="mileage"
-              v-model="form.mileage"
-              required
-            />
-          </div>
-          <div class="form-input2">
-            <span class="flex gap-1">
-              <label for="date">Date</label>
-            </span>
-            <input
-              class="form-field"
-              type="date"
-              name="date"
-              placeholder="Pick a date"
-              v-model="form.date"
-              required
-            />
-          </div>
-          <div class="form-input2">
-            <span class="flex gap-1">
-              <label for="time">Time</label>
-            </span>
-            <input
-              class="form-field"
-              type="time"
-              name="time"
-              placeholder="Select a time"
-              v-model="form.time"
-              required
-            />
+          <div v-else class="">
+            <div class="form-input2">
+              <span class="flex gap-1">
+                <label for="eOdometer">Ending Odometer</label>
+              </span>
+              <input
+                class="form-field"
+                type="number"
+                name="eOdometer"
+                v-model="form.endOdometer"
+                required
+              />
+            </div>
+            <div class="form-input2">
+              <span class="flex gap-1">
+                <label for="fUsed">Fuel Used</label>
+              </span>
+              <input
+                class="form-field"
+                type="number"
+                name="fUsed"
+                v-model="form.fuelUsed"
+                required
+              />
+            </div>
           </div>
           <button
             type="submit"
