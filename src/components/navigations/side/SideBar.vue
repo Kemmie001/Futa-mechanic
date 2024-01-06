@@ -45,7 +45,7 @@
             ><i class="fa-solid fa-location-crosshairs"></i> GPS
             Tracker</router-link
           >
-          <router-link to="/"
+          <router-link to="/reports"
             ><i class="fa-solid fa-file-lines"></i> Reports
           </router-link>
         </ul>

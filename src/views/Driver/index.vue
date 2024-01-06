@@ -24,10 +24,9 @@ const showVehicleLogModal = () => {
 </script>
 
 <template>
-  <div class="px-5 px-8">
+  <div class="px-5 md:px-8">
     <div class="flex mt-8 justify-between items-center">
       <h2 class="text-3xl font-semibold">Vehicle Log</h2>
-      {{}}
       <button
         v-if="userInformation?.loggedInUser?.role === 'driver'"
         @click="showVehicleLogModal"

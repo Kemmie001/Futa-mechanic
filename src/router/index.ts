@@ -109,6 +109,13 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "Dashboard" */ "../views/Vehicle/index.vue"),
   },
   {
+    path: "/reports",
+    name: "report-dashboard",
+    meta: { layout: DashboardLayout },
+    component: () =>
+      import(/* webpackChunkName: "Dashboard" */ "../views/Reports/index.vue"),
+  },
+  {
     path: "/driver",
     name: "driver-dashboard",
     meta: { layout: DashboardLayout },
