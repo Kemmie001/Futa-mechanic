@@ -1,7 +1,7 @@
 <template>
   <div class="px-5 md:px-8">
     <div class="flex justify-between py-4">
-      <h1 class="">Maintenance Activities</h1>
+      <h1 class="">Workbay</h1>
       <div class="flex gap-4 cursor-pointer items-center">
         <button @click="showPlanMaintenanceModal" class="btn-primary py-2 px-5">
           Plan Maintenance

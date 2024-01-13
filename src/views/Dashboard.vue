@@ -166,7 +166,7 @@ onMounted(async () => {
             }}
           </h2>
           <p class="font-medium text-sm text-primary">
-            Major Maintenance Activities
+            Work Orders
           </p>
         </div>
         <div

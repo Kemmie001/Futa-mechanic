@@ -33,7 +33,7 @@
             ><i class="fa-solid fa-house"></i>Dashboard
           </router-link>
           <router-link to="/maintenance"
-            ><i class="fa-solid fa-screwdriver-wrench"></i> Maintenance
+            ><i class="fa-solid fa-screwdriver-wrench"></i> Workbay
           </router-link>
           <router-link to="/driver"
             ><i class="fa-solid fa-user-gear"></i> Vehicle Log
