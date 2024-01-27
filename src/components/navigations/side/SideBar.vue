@@ -35,17 +35,25 @@
           <router-link to="/maintenance"
             ><i class="fa-solid fa-screwdriver-wrench"></i> Workbay
           </router-link>
-          <router-link to="/driver"
+          <router-link
+            to="/driver"
+            v-if="regInformation?.role !== 'maintenance_personnel'"
             ><i class="fa-solid fa-user-gear"></i> Vehicle Log
           </router-link>
-          <router-link to="/vehicle"
+          <router-link
+            v-if="regInformation?.role !== 'maintenance_personnel'"
+            to="/vehicle"
             ><i class="fa-solid fa-car"></i> Vehicle
           </router-link>
-          <router-link to="/"
+          <router-link
+            to="/"
+            v-if="regInformation?.role !== 'maintenance_personnel'"
             ><i class="fa-solid fa-location-crosshairs"></i> GPS
             Tracker</router-link
           >
-          <router-link to="/reports"
+          <router-link
+            to="/reports"
+            v-if="regInformation.role !== 'maintenance_personnel'"
             ><i class="fa-solid fa-file-lines"></i> Reports
           </router-link>
         </ul>
@@ -71,8 +79,9 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
-import { watch } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { regInfo } from "@/store/register";
+import { userInfo } from "@/store/user";
 
 const closeSidebar = () => {
   document.querySelector<HTMLElement>("#sidebar")?.classList.remove("open");
@@ -86,7 +95,15 @@ const signOut = () => {
   localStorage.removeItem("futaToken");
   router.push({ name: "login" });
 };
-// const regInformation = regInfo().userData;
+const regInformation = computed(() => {
+  return regInfo().userData;
+});
+
+onMounted(async () => {
+  if (!Object.keys(regInformation.value).length) {
+    await userInfo().fetchUserProfile();
+  }
+});
 </script>
 
 <style scoped lang="scss">

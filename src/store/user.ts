@@ -1,6 +1,7 @@
 import { getUser, getUserVehicle } from "@/service/endpoints";
 import { defineStore } from "pinia";
 import { useErrorInfo } from "./error";
+import { regInfo } from "./register";
 // import { ProfileDetails, userDetails } from "@/interfaces/profileInfo";
 
 export interface userDetails {
@@ -83,6 +84,7 @@ export const userInfo = defineStore("profile", {
       try {
         const { data } = await getUser();
         this.userData = data;
+        regInfo().updateUserData(data.loggedInUser);
         console.log(this.userData);
       } catch (e) {
         const error = e as any;

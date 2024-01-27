@@ -2,7 +2,7 @@
   <tr
     @click="
       router.push({
-        name: 'maintenance-slug',
+        name: 'maintenanceSlug',
         params: { slug: props.id },
       })
     "

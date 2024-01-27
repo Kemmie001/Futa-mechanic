@@ -85,22 +85,60 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/maintenance",
-    name: "maintenance-dashboard",
+    name: "maintenace",
     meta: { layout: DashboardLayout },
+    redirect: { name: "maintenance-dashboard" },
     component: () =>
       import(
-        /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDashboard.vue"
+        /* webpackChunkName: "Dashboard" */ "../views/maintenance/Maintenance.vue"
       ),
+    children: [
+      {
+        path: "/maintenance",
+        name: "maintenance-dashboard",
+        component: () =>
+          import(
+            /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDashboard.vue"
+          ),
+      },
+      {
+        path: "/:slug",
+        name: "maintenanceSlug",
+        // redirect: { name: "maintenanceSlug" },
+        component: () =>
+          import(
+            /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDetails.vue"
+          ),
+      },
+    ],
   },
-  {
-    path: "/:slug",
-    name: "maintenance-slug",
-    component: () =>
-      import(
-        /* webpackChunkName: "Dashboard" */ "../views/maintenance/[slug].vue"
-      ),
-    meta: { layout: DashboardLayout },
-  },
+  // {
+  //   path: "/:slug",
+  //   name: "maintenanceSlug",
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDetails.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/maintenance",
+  //   name: "maintenance-dashboard",
+  //   meta: { layout: DashboardLayout },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDashboard.vue"
+  //     ),
+  //   children: [
+  //     {
+  //       path: "/maintenance/:slug",
+  //       name: "maintenanceSlug",
+  //       component: () =>
+  //         import(
+  //           /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDetails.vue"
+  //         ),
+  //     },
+  //   ],
+  // },
   {
     path: "/vehicle",
     name: "vehicle-dashboard",

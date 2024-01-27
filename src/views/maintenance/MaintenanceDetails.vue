@@ -1,7 +1,18 @@
 <script setup lang="ts">
+import { userInfo } from "@/store/user";
+import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import MaintenanceDetails from "@/views/maintenance/MaintenancePersonnel/MaintenanceDetails.vue";
 const router = useRouter();
 const route = useRoute();
+const userInformation = computed(() => {
+  return userInfo().userData;
+});
+onMounted(async () => {
+  if (!Object.keys(userInformation.value).length) {
+    await userInfo().fetchUserProfile();
+  }
+});
 </script>
 
 <template>
@@ -22,16 +33,28 @@ const route = useRoute();
     </div>
     <div class="flex justify-between items-center">
       <span class="flex flex-col">
-        <h3 class="text-primary9 font-bold text-xl">
+        <h3 class="text-primary9 font-semibold text-2xl">
           #{{ route.params.slug }}
         </h3>
-        <p class="text-base text-gray6">Maintenance ID</p>
+        <p class="text-lg text-gray6 font-light">Maintenance ID</p>
       </span>
-      <button class="border border-primary px-3 py-2 rounded-md text-primary">
+      <button
+        v-if="userInformation?.loggedInUser?.role !== 'maintenance_personnel'"
+        class="border border-primary px-3 py-2 rounded-md text-primary"
+      >
         Export
       </button>
+      <button
+        v-else
+        class="border border-primary px-3 py-2 rounded-md text-primary"
+      >
+        Accept work
+      </button>
     </div>
-    <div class="md:flex gap-2 mt-5">
+    <div
+      v-if="userInformation?.loggedInUser?.role !== 'maintenance_personnel'"
+      class="md:flex gap-2 mt-5"
+    >
       <div class="w-full md:w-6/12 mt-4">
         <div class="border border-[#E4E7EC] rounded-md">
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -88,12 +111,35 @@ const route = useRoute();
           <ul class="flex flex-col my-5">
             <li class="flex gap-4 items-center">
               <span
-                class="flex justify-center bg-primary text-white font-medium text-lg items-center w-10 h-10 rounded-full"
+                class="flex justify-center bg-primary text-white font-medium text-md items-center w-10 h-10 rounded-full"
                 >1
               </span>
-              <p class="text-primary font-semibold">Pending</p>
+              <p class="text-primary font-medium text-md">Pending</p>
             </li>
-            <li class="h-5 w-20 border-l border-primaryI ml-5"></li>
+            <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
+            <li class="flex gap-4 items-center">
+              <span
+                class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                >2
+              </span>
+              <p class="text-dark text-md font-medium">In shop</p>
+            </li>
+            <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
+            <li class="flex gap-4 items-center">
+              <span
+                class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                >3
+              </span>
+              <p class="text-dark text-md font-medium">In Progress</p>
+            </li>
+            <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
+            <li class="flex gap-4 items-center">
+              <span
+                class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                >4
+              </span>
+              <p class="text-dark text-md font-medium">Completed</p>
+            </li>
           </ul>
         </div>
       </div>
@@ -138,6 +184,9 @@ const route = useRoute();
           </ul>
         </div>
       </div>
+    </div>
+    <div v-else class="md:flex gap-2 mt-5">
+      <MaintenanceDetails />
     </div>
   </div>
 </template>

@@ -3,8 +3,10 @@ import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
 import { BarChart, useBarChart } from "vue-chart-3";
 import { DoughnutChart, useDoughnutChart } from "vue-chart-3";
 import { computed, onMounted, ref } from "vue";
+import { maintenanceList } from "../composables/maintenances";
 import { regInfo } from "@/store/register";
 import { userInfo } from "@/store/user";
+import { useRouter } from "vue-router";
 type FILTEMODE = "ALLTIME" | "MONTH" | "YEAR";
 
 const filterMode = ref<FILTEMODE>("MONTH");
@@ -124,6 +126,7 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
 
 const regInformation = regInfo().userData;
 const roller = ref(false);
+const router = useRouter();
 const userInformation = computed(() => {
   return userInfo().userData;
 });
@@ -143,8 +146,8 @@ onMounted(async () => {
         v-if="roller"
         class="animate-spin roller flex items-center justify-center"
       ></div>
-      <div class="py-5">
-        <h2 class="font-bold text-primary9 text-2xl">
+      <div class="pt-5">
+        <h2 class="font-semibold text-primary9 text-2xl">
           Welcome {{ userInformation?.loggedInUser?.firstName }}
         </h2>
         <p class="text-base text-gray6 py-1">
@@ -153,6 +156,7 @@ onMounted(async () => {
         </p>
       </div>
       <div
+        v-if="userInformation?.loggedInUser?.role !== 'maintenance_personnel'"
         class="mt-4 grid md:grid-cols-2 gap-4 bg-primaryI p-4 text-center mb-10"
       >
         <div
@@ -175,37 +179,31 @@ onMounted(async () => {
           <h2 class="font-bold text-primary5 text-xl">Akure/ Nigeria</h2>
           <p class="font-medium text-sm text-primary">Current Location</p>
         </div>
+      </div>
+      <div v-else class="mt-4 grid md:grid-cols-2 gap-6 pt-5 text-center mb-10">
         <div
-          class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
+          class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
         >
-          <h2 class="font-bold text-primary5 text-xl">1024</h2>
-          <p class="font-medium text-sm text-primary">
-            Total Vehicle Mileage (km)
-          </p>
+          <h2 class="font-bold text-primary5 text-xl">0124</h2>
+          <p class="font-medium text-sm text-primary">Work Order</p>
         </div>
         <div
-          class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
+          class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
         >
-          <h2 class="font-bold text-primary5 text-xl">200</h2>
-          <p class="font-medium text-sm text-primary">
-            Last Recorded Vehicle Mileage (km)
-          </p>
+          <h2 class="font-bold text-primary5 text-xl">0124</h2>
+          <p class="font-medium text-sm text-primary">Work Order</p>
         </div>
         <div
-          class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
+          class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
         >
-          <h2 class="font-bold text-primary5 text-xl">10 Nov, 2023</h2>
-          <p class="font-medium text-sm text-primary">
-            Last Recorded Maintenance
-          </p>
+          <h2 class="font-bold text-primary5 text-xl">0124</h2>
+          <p class="font-medium text-sm text-primary">Work Order</p>
         </div>
         <div
-          class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
+          class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
         >
-          <h2 class="font-bold text-primary5 text-xl">13 Nov, 2023</h2>
-          <p class="font-medium text-sm text-primary">
-            Next Maintenance Activity
-          </p>
+          <h2 class="font-bold text-primary5 text-xl">0124</h2>
+          <p class="font-medium text-sm text-primary">Work Order</p>
         </div>
       </div>
       <div class="mt-4 bg-primaryI p-4 mb-10">
@@ -230,7 +228,7 @@ onMounted(async () => {
         <BarChart class="my-5" v-bind="barChartProps" />
       </div>
     </div>
-    <div class="lg:w-5/12 bg-primaryI py-12 px-8">
+    <div class="lg:w-5/12 bg-primaryI py-10 px-6">
       <div class="text-right w-full"></div>
       <div
         v-if="userInformation?.loggedInUser?.role === 'vehicle_assignee'"
@@ -274,6 +272,36 @@ onMounted(async () => {
           </div>
         </div>
       </div>
+      <div
+        v-if="userInformation?.loggedInUser?.role === 'maintenance_personnel'"
+        class="active-driver p-3"
+      >
+        <h2 class="text-black text-lg font-medium">Maintenance Personnel</h2>
+        <div class="mx-auto my-5">
+          <img
+            class="w-28 h-28 object-contain bg-firstGray mx-auto rounded-full"
+            src="../assets/sellerAvatar.png"
+            alt="driver"
+          />
+        </div>
+        <div class="">
+          <div class="mt-4 text-base">
+            <span class="flex gap-3 pb-2">
+              <p class="text-sm">Name:</p>
+              <p class="font-medium text-sm">
+                {{ userInformation.loggedInUser.firstName }}
+                {{ userInformation.loggedInUser.lastName }}
+              </p>
+            </span>
+            <span class="flex gap-3 pb-2">
+              <p class="text-sm">Area of Expertise :</p>
+              <p class="font-medium text-sm">
+                Automotive Technician
+              </p>
+            </span>
+          </div>
+        </div>
+      </div>
       <div v-else class="active-driver p-4">
         <h2 class="text-black text-lg font-semibold">Assigned Owner</h2>
         <div
@@ -302,7 +330,10 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-      <div class="active-driver p-4 mt-10">
+      <div
+        v-if="userInformation?.loggedInUser?.role !== 'maintenance_personnel'"
+        class="active-driver p-4 mt-10"
+      >
         <h2 class="text-black text-lg font-semibold mb-5">Service Chart</h2>
         <DoughnutChart v-bind="doughnutChartProps" />
         <ul class="flex flex-col gap-4 my-5">
@@ -323,6 +354,47 @@ onMounted(async () => {
             <p class="text-sm font-medium">Other Services</p>
           </li>
         </ul>
+      </div>
+      <div v-else class="active-driver p-3 mt-10">
+        <h2 class="text-black text-lg font-semibold">
+          Upcoming Works
+        </h2>
+        <div class="product-table py-4">
+          <div class="table-container">
+            <table class="table-auto w-full">
+              <thead class="table__header">
+                <tr
+                  class="product_table__row text-left text-[#344054] bg-[#F9FAFB]"
+                >
+                  <th class="font-medium pl-2 text-sm py-3">Maintenance ID</th>
+                  <th class="font-medium text-sm py-2 text-left">Date</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  v-for="maintenance in maintenanceList"
+                  :key="maintenance.id"
+                  @click="
+                    router.push({
+                      name: 'maintenanceSlug',
+                      params: { slug: maintenance.id },
+                    })
+                  "
+                  class="hover:bg-[#E4E7EC] border-b border-[#E4E7EC] cursor-pointer"
+                >
+                  <td class="table__image py-3 px-2">
+                    <p class="text-xs w-32">#{{ maintenance.id }}</p>
+                  </td>
+                  <td class="table__date">
+                    <p class="text-xs w-[220px] lg:w-full">26/01/2024</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <Pagination v-model="page" :rows-number="rows" :rows-per-page="5" /> -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
