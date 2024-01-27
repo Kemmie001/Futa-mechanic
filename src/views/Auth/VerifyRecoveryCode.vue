@@ -1,30 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { recoverPasswordCode } from "@/service/endpoints";
 import { useErrorInfo } from "@/store/error";
-import { logMeIn } from "@/service/endpoints";
-import { regInfo } from "@/store/register";
-const router = useRouter();
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const loginData = ref({
-  password: "",
-  email_staffId: "",
+const recoveryCodeData = ref({
+  email: "",
+  code: "",
 });
-const customError = useErrorInfo();
-const emits = defineEmits(["updateErrorMessage"]);
-
 const roller = ref(false);
-const loginForm = async () => {
+const customError = useErrorInfo();
+const router = useRouter();
+const verifyRecoveryCode = async () => {
   // signUpData.phone.value = "this.countryCode + this.phoneNumber";
   try {
     roller.value = true;
-    const { data } = await logMeIn(loginData.value);
+    const { data } = await recoverPasswordCode(recoveryCodeData.value);
 
-    loginData.value.email_staffId = "";
-    loginData.value.password = "";
-    regInfo().updateUserData(data.userInfo);
-    localStorage.setItem("futaToken", await data.token);
-    router.push("/dashboard");
+    recoveryCodeData.value.email = "";
+    recoveryCodeData.value.code = "";
+    customError.updateErrorMsg(data?.msg ?? "Correct code submit", true);
+    router.push("/reset-password");
   } catch (e) {
     const error = e as any;
     console.log(error);
@@ -41,7 +37,7 @@ const loginForm = async () => {
 <template>
   <div class="flex p-4 md:gap-10 lg:gap-14 items-center">
     <div
-      class="auth-bg h-[100vh] text-white rounded-3xl px-10 hidden md:block md:w-6/12 lg:w-5/12 py-8 relative"
+      class="auth-bg h-screen text-white rounded-3xl px-10 hidden md:block md:w-6/12 lg:w-5/12 py-8 relative"
     >
       <div class="">
         <p class="font-bold text-2xl">FUTA</p>
@@ -64,7 +60,7 @@ const loginForm = async () => {
           <div class="">
             <img
               class="w-12 h-12 rounded-full border border-primary"
-              src="../../../assets/img/user.png"
+              src="../../assets/img/user.png"
               alt=""
             />
           </div>
@@ -75,38 +71,43 @@ const loginForm = async () => {
         </div>
       </div>
     </div>
-    <div class="w-full md:w-6/12 py-8 px-8 md:px-20">
-      <div class="mb-4">
-        <h6 class="text-dark text-3xl mb-2 font-semibold">Welcome back!</h6>
+    <div class="w-full md:w-6/12 py-8 px-8">
+      <div class="mb-4 w-full md:w-9/12 mx-auto">
+        <h6 class="text-dark text-2xl mb-4 font-semibold">
+          Verify Recovery Code
+        </h6>
         <span class="flex gap-2">
-          <p class="text-[#645D5D]">Don’t have an account?</p>
-          <router-link to="/register/vehicle-owner" class="text-primary"
-            >Sign Up</router-link
-          >
+          <p class="text-[#645D5D]">
+            Kindly provide us with the email address and unique code that was
+            sent to the email that is linked to your account.
+          </p>
         </span>
       </div>
-      <form @submit.prevent="loginForm" class="mt-8">
+      <form
+        @submit.prevent="verifyRecoveryCode"
+        class="md:w-9/12 w-full my-5 mx-auto"
+      >
         <div class="form-input2">
           <span class="flex gap-1">
-            <label for="email">Email Address</label>
+            <label for="email">Email address</label>
           </span>
           <input
             class="form-field"
-            type="email"
+            type="text"
             name="email"
-            v-model="loginData.email_staffId"
+            v-model="recoveryCodeData.email"
             required
           />
         </div>
         <div class="form-input2">
           <span class="flex gap-1">
-            <label for="password">Password</label>
+            <label for="email">Unique code</label>
           </span>
           <input
             class="form-field"
-            type="password"
-            name="password"
-            v-model="loginData.password"
+            type="text"
+            name="email"
+            v-model="recoveryCodeData.code"
             required
           />
         </div>
@@ -117,14 +118,14 @@ const loginForm = async () => {
           :class="[roller ? 'opacity-75' : '']"
         >
           <div v-if="roller" class="animate-spin roller"></div>
-          Login
+          Verify
         </button>
       </form>
-      <div class="flex gap-2 justify-center text-sm items-center my-5">
-        <p class="text-[#645D5D]">Forgot Password?</p>
-        <router-link to="/forgot-password" class="text-primary font-medium"
-          >Recover</router-link
-        >
+      <div
+        class="text-sm absolute bottom-4 md:left-[50%] translate-x-[40%] flex gap-10 font-light"
+      >
+        <router-link to="/" class="text-[#5693CC]">Terms of Use</router-link>
+        <router-link to="/" class="text-[#5693CC]">Privacy Policy</router-link>
       </div>
     </div>
   </div>
@@ -142,7 +143,7 @@ const loginForm = async () => {
   }
 }
 .auth-bg {
-  background-image: url("../../../assets/img/auth-bg.png");
+  background-image: url("../../assets/img/auth-bg.png");
   background-size: cover;
 }
 </style>

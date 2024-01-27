@@ -49,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
       ),
   },
   {
-    path: "/auth/forgot-password",
+    path: "/forgot-password",
     meta: { layout: AuthLayout },
     name: "forgot-password",
     component: () =>
@@ -58,21 +58,21 @@ const routes: Array<RouteRecordRaw> = [
       ),
   },
   {
-    path: "/auth/check-email",
+    path: "/verify-recovery-code",
     meta: { layout: AuthLayout },
-    name: "check-email",
+    name: "verify-recovery-code",
     component: () =>
       import(
-        /* webpackChunkName: "sigin page" */ "../views/Auth/CheckEmail.vue"
+        /* webpackChunkName: "sigin p  age" */ "../views/Auth/VerifyRecoveryCode.vue"
       ),
   },
   {
-    path: "/auth/password-reset-verification",
+    path: "/reset-password",
     meta: { layout: AuthLayout },
-    name: "password-reset-verification",
+    name: "reset-password",
     component: () =>
       import(
-        /* webpackChunkName: "sigin page" */ "../views/Auth/AwaitVerification.vue"
+        /* webpackChunkName: "sigin p  age" */ "../views/Auth/ResetPassword.vue"
       ),
   },
   // Dashboard
@@ -112,33 +112,6 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-  // {
-  //   path: "/:slug",
-  //   name: "maintenanceSlug",
-  //   component: () =>
-  //     import(
-  //       /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDetails.vue"
-  //     ),
-  // },
-  // {
-  //   path: "/maintenance",
-  //   name: "maintenance-dashboard",
-  //   meta: { layout: DashboardLayout },
-  //   component: () =>
-  //     import(
-  //       /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDashboard.vue"
-  //     ),
-  //   children: [
-  //     {
-  //       path: "/maintenance/:slug",
-  //       name: "maintenanceSlug",
-  //       component: () =>
-  //         import(
-  //           /* webpackChunkName: "Dashboard" */ "../views/maintenance/MaintenanceDetails.vue"
-  //         ),
-  //     },
-  //   ],
-  // },
   {
     path: "/vehicle",
     name: "vehicle-dashboard",
@@ -173,6 +146,8 @@ const openRoutes = [
   "register",
   "login",
   "forgot-password",
+  "verify-recovery-code",
+  "reset-password",
 ];
 router.beforeEach(async (to: any, from, next) => {
   if (!openRoutes.includes(to.name) && !isLoggedIn()) next({ name: "login" });

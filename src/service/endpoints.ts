@@ -5,6 +5,15 @@ export function registerMe(data: object) {
 export function logMeIn(data: object) {
   return httpBase.post("/auth/login", data);
 }
+export function recoverPassword(data: object) {
+  return httpBase.post("/auth/password-recovery-code", data);
+}
+export function recoverPasswordCode(data: object) {
+  return httpBase.post("/auth/recovery-code-verify", data);
+}
+export function resetNewPassword(data: object) {
+  return httpBase.post("/auth/recover-password", data);
+}
 
 export const isLoggedIn = () => {
   let user = window.localStorage.getItem("futaToken");
