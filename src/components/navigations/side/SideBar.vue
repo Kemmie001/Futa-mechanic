@@ -45,12 +45,12 @@
             to="/vehicle"
             ><i class="fa-solid fa-car"></i> Vehicle
           </router-link>
-          <router-link
+          <!-- <router-link
             to="/"
             v-if="regInformation?.role !== 'maintenance_personnel'"
             ><i class="fa-solid fa-location-crosshairs"></i> GPS
             Tracker</router-link
-          >
+          > -->
           <router-link
             to="/reports"
             v-if="regInformation.role !== 'maintenance_personnel'"

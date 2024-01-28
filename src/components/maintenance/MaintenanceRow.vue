@@ -3,7 +3,7 @@
     @click="
       router.push({
         name: 'maintenanceSlug',
-        params: { slug: props.id },
+        params: { slug: props.m },
       })
     "
     class="hover:bg-primaryI cursor-pointer"
@@ -15,7 +15,9 @@
       <p class="text-xs w-[220px] lg:w-full">{{ props.concern }}</p>
     </td>
     <td class="table__date">
-      <p class="text-xs w-32 lg:w-full">{{ props.milage }}km</p>
+      <p class="text-xs w-32 lg:w-full">
+        {{ moment(props.proposedDate).format("D MMM YYYY") }}
+      </p>
     </td>
     <td class="table__date">
       <p class="text-xs w-40 lg:w-full">{{ props.personnel }}</p>
@@ -39,15 +41,17 @@
 </template>
 
 <script setup lang="ts">
+import moment from "moment";
 import { defineProps, ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const props = defineProps({
   id: String,
   concern: String,
-  milage: Number,
+  proposedDate: String,
   personnel: String,
   status: String,
+  m: String,
 });
 </script>
 

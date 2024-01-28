@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { userInfo } from "@/store/user";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import MaintenanceDetails from "@/views/maintenance/MaintenancePersonnel/MaintenanceDetails.vue";
+import { useErrorInfo } from "@/store/error";
+import { useMaintenance } from "@/store/maintenance";
 const router = useRouter();
 const route = useRoute();
 const userInformation = computed(() => {
   return userInfo().userData;
 });
+const customError = useErrorInfo();
+const roller = ref(false);
 onMounted(async () => {
   if (!Object.keys(userInformation.value).length) {
     await userInfo().fetchUserProfile();

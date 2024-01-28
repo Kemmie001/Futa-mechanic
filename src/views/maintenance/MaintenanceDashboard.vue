@@ -14,7 +14,12 @@
           class="border border-[#D0D5DD] rounded-[8px] px-2 py-2 flex items-center gap-2"
         >
           <i class="fa-solid fa-magnifying-glass text-lg"></i>
-          <input type="search" class="outline-none" placeholder="Search here" />
+          <input
+            type="search"
+            class="outline-none"
+            v-model="searchMaint"
+            placeholder="Search here"
+          />
         </div>
         <button
           class="flex px-2 py-2 mt-4 md:mt-0 items-center border border-[#D0D5DD] rounded-[8px] gap-2"
@@ -31,7 +36,7 @@
         <i class="fa-solid fa-angle-down ml-2"></i>
       </button>
     </div>
-    <div v-if="!productList" class="empty-page h-screen my-4">
+    <div v-if="!maintenanceList" class="empty-page h-screen my-4">
       <div class="text-center">
         <div class="w-32 mx-auto mb-6">
           <!-- <img
@@ -57,7 +62,7 @@
               <th class="font-medium pl-2 text-sm py-3">Maintenance ID</th>
               <th class="font-medium text-sm py-2 text-left">Concern</th>
               <th class="font-medium text-sm py-2 text-left">
-                Mileage (kilometer)
+                Due Date
               </th>
               <th class="font-medium text-sm py-2 text-left">
                 Personnel In-charge
@@ -69,38 +74,74 @@
           <tbody>
             <maintenanceRow
               v-for="(maintenance, index) in maintenanceList"
-              :milage="maintenance.milage"
-              :status="maintenance.status"
-              :personnel="maintenance.personnel"
-              :concern="maintenance.concern"
-              :id="maintenance.id"
+              :concern="maintenance.concerns[0]"
+              :id="'FUTAWORK' + index"
+              :proposed-date="maintenance?.proposedTime.toDateString"
+              :status="'Pending'"
+              :m="maintenance?._id"
             />
           </tbody>
         </table>
-        <Pagination v-model="page" :rows-number="rows" :rows-per-page="5" />
+        <!-- <Pagination v-model="page" :rows-number="rows" :rows-per-page="5" /> -->
       </div>
     </div>
     <PlanMaintenance
       :close="showPlanMaintenanceModal"
       :open="openPlanMaintenanceModal"
+      :vehicle="vehicleData._id"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import PlanMaintenance from "@/components/Modal/planMaintenance.vue";
-import { maintenanceList } from "../../composables/maintenances";
+
 import maintenanceRow from "@/components/maintenance/MaintenanceRow.vue";
 import Pagination from "@/components/pagination.vue";
-import { ref } from "vue";
-const productList: any[] = [];
-const page = ref(1);
-const rows = ref(0);
+import { computed, onMounted, ref } from "vue";
+import { useErrorInfo } from "@/store/error";
+import { useMaintenance } from "@/store/maintenance";
+import { userInfo } from "@/store/user";
+const searchMaint = ref("");
 const openPlanMaintenanceModal = ref(false);
 const showPlanMaintenanceModal = () => {
   console.log("hey");
   openPlanMaintenanceModal.value = !openPlanMaintenanceModal.value;
 };
+const maintenanceList = computed(() => {
+  const maint = useMaintenance().allPlannedMaintenance;
+  return maint.allPlannedMaint.filter((maintenance) =>
+    maintenance.concerns[0]
+      .toLowerCase()
+      .includes(searchMaint.value.toLowerCase())
+  );
+  //   ||
+  // customer.lastName
+  //   .toLowerCase()
+  //   .includes(searchCustomer.value.toLowerCase())
+});
+const vehicleData = computed(() => {
+  return userInfo().vehicleData;
+});
+
+const customError = useErrorInfo();
+const roller = ref(false);
+onMounted(async () => {
+  if (!Object.keys(vehicleData.value).length) {
+    roller.value = true;
+    await userInfo().fetchUserVehicle();
+    roller.value = false;
+  }
+  if (!useMaintenance().allPlannedMaintenance.nbHit) {
+    roller.value = true;
+    await useMaintenance().getAllPlannedMaintenance({
+      vehicle: vehicleData.value._id,
+      start_date: "",
+      end_date: "",
+    });
+    roller.value = false;
+  }
+});
 </script>
 
 <style lang="scss">

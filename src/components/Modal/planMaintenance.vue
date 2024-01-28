@@ -1,22 +1,72 @@
 <script lang="ts" setup>
+import moment from "moment";
 import { ref } from "vue";
 import modal from "./index.vue";
 import { defineProps } from "vue";
+import { useErrorInfo } from "@/store/error";
+import { planMaintenance } from "@/service/endpoints";
+import Multiselect from "./Multiselect.vue";
+import { useMaintenance } from "@/store/maintenance";
+
 const props = defineProps([
   "open",
   "close",
   "showActionsModal",
   "id",
   "deleteProduct",
+  "vehicle",
 ]);
-const form = ref({
-  service: "",
-  concern: "",
-  mileage: 0,
-  date: "",
-  time: "",
+const concern = ref<string>("");
+const minDate = moment(new Date()).format("YYYY-MM-DD");
+const form = ref<any>({
+  vehicle: "",
+  services: [],
+  concerns: [],
+  proposedDate: "",
 });
-const planMaintenance = () => {};
+const allServices = [
+  { id: 1, name: "oil change" },
+  { id: 2, name: "tyre change" },
+  { id: 3, name: "Brake Pad Repair" },
+  { id: 4, name: "Flat Tyre" },
+  { id: 5, name: "Battery Change" },
+];
+const selectedValues = (value: any) => {
+  for (let index = 0; index < value.length; index++) {
+    const element = value[index];
+    form.value.services.push(element.name);
+  }
+};
+
+const customError = useErrorInfo();
+const roller = ref(false);
+const planMaintenanceForm = async () => {
+  try {
+    roller.value = true;
+    form.value.vehicle = props.vehicle;
+    form.value.concerns.push(concern.value);
+    const { data } = await planMaintenance(form.value);
+
+    form.value.services = [];
+    form.value.concerns = [];
+    form.value.proposedDate = "";
+  } catch (e) {
+    const error = e as any;
+    console.log(error);
+    customError.updateErrorMsg(
+      error?.response?.data?.err ?? "An error occurred",
+      false
+    );
+  } finally {
+    roller.value = false;
+    await useMaintenance().getAllPlannedMaintenance({
+      vehicle: props.vehicle,
+      start_date: "",
+      end_date: "",
+    });
+    props.close();
+  }
+};
 </script>
 <template>
   <modal :open="props.open" :close="props.close" class="overflow-y-hidden">
@@ -29,24 +79,12 @@ const planMaintenance = () => {};
           <i class="fa-solid fa-xmark text-2xl"></i>
         </button>
         <h4 class="text-xl font-semibold">Plan Maintenance</h4>
-        <form @submit.prevent="planMaintenance" class="mt-6">
+        <form @submit.prevent="planMaintenanceForm" class="mt-6">
           <div class="form-input2">
             <span class="flex gap-1">
-              <label for="email">Services</label>
+              <label for="services">Services</label>
             </span>
-            <select
-              name="service"
-              v-model="form.service"
-              id="service"
-              class="form-field"
-            >
-              <option value="oilChange">Oil Change</option>
-              <option value="tyreChange">Tyre Change</option>
-              <option value="brakePad">Brake Pad Repair</option>
-              <option value="batterChange">Battery Change</option>
-              <option value="flatTyre">Flat Tyre</option>
-              <option value="others">Others</option>
-            </select>
+            <Multiselect :options="allServices" @input="selectedValues" />
           </div>
           <div class="form-input2">
             <span class="flex gap-1">
@@ -56,19 +94,7 @@ const planMaintenance = () => {};
               class="form-field"
               type="text"
               name="concern"
-              v-model="form.concern"
-              required
-            />
-          </div>
-          <div class="form-input2">
-            <span class="flex gap-1">
-              <label for="mileage">Mileage</label>
-            </span>
-            <input
-              class="form-field"
-              type="number"
-              name="mileage"
-              v-model="form.mileage"
+              v-model="concern"
               required
             />
           </div>
@@ -80,29 +106,19 @@ const planMaintenance = () => {};
               class="form-field"
               type="date"
               name="date"
+              :min="minDate"
               placeholder="Pick a date"
-              v-model="form.date"
-              required
-            />
-          </div>
-          <div class="form-input2">
-            <span class="flex gap-1">
-              <label for="time">Time</label>
-            </span>
-            <input
-              class="form-field"
-              type="time"
-              name="time"
-              placeholder="Select a time"
-              v-model="form.time"
+              v-model="form.proposedDate"
               required
             />
           </div>
           <button
+            :disabled="roller"
             type="submit"
-            class="w-full mt-5 py-3 flex btn-primary items-center justify-center gap-2"
+            class="w-full mt-8 py-3 flex btn-primary items-center justify-center gap-2"
+            :class="[roller ? 'opacity-75' : '']"
           >
-            <!-- <div class="animate-spin roller"></div> -->
+            <div v-if="roller" class="animate-spin roller"></div>
             Submit
           </button>
         </form>
