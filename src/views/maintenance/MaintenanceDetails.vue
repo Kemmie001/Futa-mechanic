@@ -168,7 +168,7 @@ onMounted(async () => {
             <li class="flex flex-col gap-2">
               <p class="text-md font-medium text-[#101928]">Vehicle Type:</p>
               <p class="text-sm text-gray5 font-normal">
-                No report available.
+                {{ userInformation.user_vehicle.vehicle_name }}
               </p>
             </li>
             <li class="flex flex-col gap-2">
@@ -186,7 +186,7 @@ onMounted(async () => {
             <li class="flex flex-col gap-2">
               <p class="text-md font-medium text-[#101928]">Day Completed:</p>
               <p class="text-sm text-gray5 font-normal">
-                No report available.
+                20-01-2024
               </p>
             </li>
             <li class="flex flex-col gap-3">

@@ -41,7 +41,7 @@ export interface userDetails {
     _v: number;
     driver: any;
   };
-
+  dashboard: any;
   vehicle_assignee: any;
 }
 export interface userVehicle {
