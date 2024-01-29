@@ -36,7 +36,11 @@
         <i class="fa-solid fa-angle-down ml-2"></i>
       </button>
     </div>
-    <div v-if="!maintenanceList" class="empty-page h-screen my-4">
+    <div
+      v-if="roller"
+      class="animate-spin roller flex items-center justify-center"
+    ></div>
+    <div v-if="!maintenanceList && !roller" class="empty-page h-screen my-4">
       <div class="text-center">
         <div class="w-32 mx-auto mb-6">
           <!-- <img

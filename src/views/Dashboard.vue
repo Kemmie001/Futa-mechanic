@@ -164,8 +164,8 @@ onMounted(async () => {
         >
           <h2 class="font-semibold text-primary5 text-xl">
             {{
-              userInformation?.user_vehicle?.maint_logs?.length
-                ? userInformation?.user_vehicle?.maint_logs?.length
+              userInformation.planned_maint.length
+                ? userInformation.planned_maint.length
                 : 0
             }}
           </h2>
@@ -176,19 +176,23 @@ onMounted(async () => {
         <div
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">Akure/ Nigeria</h2>
+          <h2 class="font-medium text-primary5 text-xl">
+            {{ userInformation.dashboard.current_location }}
+          </h2>
           <p class="font-medium text-sm text-primary">Current Location</p>
         </div>
         <div
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">1024</h2>
+          <h2 class="font-medium text-primary5 text-xl">
+            {{ userInformation.dashboard.total_mileage }}
+          </h2>
           <p class="font-medium text-sm text-primary">Total Mileage (km)</p>
         </div>
         <div
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">224</h2>
+          <h2 class="font-medium text-primary5 text-xl">224</h2>
           <p class="font-medium text-sm text-primary">
             Last Recorded Mileage (km)
           </p>
@@ -196,13 +200,13 @@ onMounted(async () => {
         <div
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">10 Nov, 2023</h2>
+          <h2 class="font-medium text-primary5 text-xl">10 Nov, 2023</h2>
           <p class="font-medium text-sm text-primary">Last Recorded Service</p>
         </div>
         <div
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">13 Nov, 2023</h2>
+          <h2 class="font-medium text-primary5 text-xl">13 Nov, 2023</h2>
           <p class="font-medium text-sm text-primary">Next Service</p>
         </div>
       </div>

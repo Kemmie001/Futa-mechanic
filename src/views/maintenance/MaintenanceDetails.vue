@@ -118,7 +118,7 @@ onMounted(async () => {
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5 pb-1">Personnel In-Charge</p>
             <p class="text-base text-primary9 pb-2">
-              Nil
+              Seun Ogun
             </p>
           </div>
         </div>
@@ -174,13 +174,13 @@ onMounted(async () => {
             <li class="flex flex-col gap-2">
               <p class="tex-md font-medium text-[#101928]">Repair done:</p>
               <p class="text-sm text-gray5 font-normal">
-                No report available.
+                The vehicles oil was changed
               </p>
             </li>
             <li class="flex flex-col gap-2">
               <p class="text-md font-medium text-[#101928]">Report:</p>
               <p class="text-sm text-gray5 font-normal">
-                No report available.
+                I filtered out the engine oil and replaced with Total Engine oil
               </p>
             </li>
             <li class="flex flex-col gap-2">
@@ -194,7 +194,7 @@ onMounted(async () => {
               <div
                 class="rounded-md bg-primaryI h-[150px] w-full flex justify-center items-center"
               >
-                <p class="font-medium">No image yet</p>
+                <img src="../../assets/img/oil.jpg" alt="" />
               </div>
             </li>
           </ul>
