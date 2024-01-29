@@ -5,16 +5,35 @@ import { useRoute, useRouter } from "vue-router";
 import MaintenanceDetails from "@/views/maintenance/MaintenancePersonnel/MaintenanceDetails.vue";
 import { useErrorInfo } from "@/store/error";
 import { useMaintenance } from "@/store/maintenance";
+import moment from "moment";
 const router = useRouter();
 const route = useRoute();
 const userInformation = computed(() => {
   return userInfo().userData;
+});
+const maintenance = computed(() => {
+  const maint = useMaintenance().allPlannedMaintenance.allPlannedMaint;
+  if (maint) {
+    const result = maint.filter(
+      (maintenance) => maintenance._id === route.params.slug
+    );
+    return result[0];
+  }
 });
 const customError = useErrorInfo();
 const roller = ref(false);
 onMounted(async () => {
   if (!Object.keys(userInformation.value).length) {
     await userInfo().fetchUserProfile();
+  }
+  if (!maintenance.value) {
+    roller.value = true;
+    await useMaintenance().getAllPlannedMaintenance({
+      vehicle: userInformation.value.user_vehicle._id,
+      start_date: "",
+      end_date: "",
+    });
+    roller.value = false;
   }
 });
 </script>
@@ -59,30 +78,23 @@ onMounted(async () => {
       v-if="userInformation?.loggedInUser?.role !== 'maintenance_personnel'"
       class="md:flex gap-2 mt-5"
     >
-      <div class="w-full md:w-6/12 mt-4">
+      <div v-if="maintenance" class="w-full md:w-6/12 mt-4">
         <div class="border border-[#E4E7EC] rounded-md">
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5">Services</p>
             <div class="flex flex-wrap gap-4 my-2">
               <span
+                v-for="(service, index) in maintenance?.services"
+                :key="index"
                 class="bg-primaryI px-2 py-1 text-primary text-sm rounded-2xl"
-                >Pump Tyre</span
-              >
-              <span
-                class="bg-primaryI px-2 py-1 text-primary text-sm rounded-2xl"
-                >Change Battery</span
-              >
-              <span
-                class="bg-primaryI px-2 py-1 text-primary text-sm rounded-2xl"
-                >Oil Change</span
+                >{{ service }}</span
               >
             </div>
           </div>
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5 pb-1">Concerns</p>
             <p class="text-base text-primary9 pb-2">
-              Lorem ipsum avec sont tues cest istum Lorem ipsum avec sont tues
-              cest istum orem ipsum avec sont tues cest istum tr
+              {{ maintenance?.concerns[0] }}
             </p>
           </div>
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -94,15 +106,15 @@ onMounted(async () => {
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5 pb-1">Maintenance Date</p>
             <p class="text-base text-primary9 pb-2">
-              Friday, Nov 10, 2023
+              {{ moment(maintenance?.proposedTime).format("D MMM YYYY") }}
             </p>
           </div>
-          <div class="border-b border-[#F7F9FC] px-4 pt-4">
+          <!-- <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5 pb-1">Maintenance Time</p>
             <p class="text-base text-primary9 pb-2">
               12:00 pm
             </p>
-          </div>
+          </div> -->
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5 pb-1">Personnel In-Charge</p>
             <p class="text-base text-primary9 pb-2">

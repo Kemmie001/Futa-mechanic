@@ -45,14 +45,14 @@
             alt=""
           /> -->
         </div>
-        <h5 class="font-semibold text-2xl mb-1">No product listed</h5>
+        <h5 class="font-semibold text-2xl mb-1">No planned maintenance yet</h5>
         <p class="text-md text-[#828282] font-light lg:w-3/4 mx-auto">
-          To start selling, click the 'Add New Product' button and start
-          creating your first product listing
+          To start planning, click the 'plan maintenance' button and start
+          planning all your maintenance activities
         </p>
       </div>
     </div>
-    <div class="product-table py-4">
+    <div v-else class="product-table py-4">
       <div class="table-container">
         <table class="table-auto w-full">
           <thead class="table__header">
@@ -109,12 +109,16 @@ const showPlanMaintenanceModal = () => {
   openPlanMaintenanceModal.value = !openPlanMaintenanceModal.value;
 };
 const maintenanceList = computed(() => {
-  const maint = useMaintenance().allPlannedMaintenance;
-  return maint.allPlannedMaint.filter((maintenance) =>
-    maintenance.concerns[0]
-      .toLowerCase()
-      .includes(searchMaint.value.toLowerCase())
-  );
+  const maint = useMaintenance().allPlannedMaintenance.allPlannedMaint;
+  if (maint) {
+    return maint.filter((maintenance) =>
+      maintenance.concerns[0]
+        .toLowerCase()
+        .includes(searchMaint.value.toLowerCase())
+    );
+  } else {
+    return maint;
+  }
   //   ||
   // customer.lastName
   //   .toLowerCase()
@@ -127,12 +131,12 @@ const vehicleData = computed(() => {
 const customError = useErrorInfo();
 const roller = ref(false);
 onMounted(async () => {
-  if (!Object.keys(vehicleData.value).length) {
+  if (!maintenanceList.value) {
     roller.value = true;
     await userInfo().fetchUserVehicle();
     roller.value = false;
   }
-  if (!useMaintenance().allPlannedMaintenance.nbHit) {
+  if (!maintenanceList.value) {
     roller.value = true;
     await useMaintenance().getAllPlannedMaintenance({
       vehicle: vehicleData.value._id,

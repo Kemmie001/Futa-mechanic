@@ -2,7 +2,7 @@
 import VehicleLogModaal from "@/components/Modal/vehicleLogModaal.vue";
 import { logList } from "../../composables/log";
 import DriverLog from "@/components/driver/DriverLog.vue";
-import { regInfo } from "@/store/register";
+import { useDriverLog } from "@/store/drivers_log";
 import { userInfo } from "@/store/user";
 import { computed, onMounted, ref } from "vue";
 
@@ -16,6 +16,10 @@ onMounted(async () => {
     await userInfo().fetchUserProfile();
     roller.value = false;
   }
+  useDriverLog().getAllDriversLog({
+    start_date: "",
+    end_date: "",
+  });
 });
 const openVehicleLogModal = ref(false);
 const showVehicleLogModal = () => {

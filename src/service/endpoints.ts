@@ -52,3 +52,8 @@ export function fetchAllMaintenance() {
 export function fetchAllPlannedMaintenance(data: object) {
   return http.post("/maint-log/all-planned-maint", data);
 }
+
+// Driver
+export function fetchAllDriversLog(data: object) {
+  return http.post("/drivers-log/all-logs", data);
+}
