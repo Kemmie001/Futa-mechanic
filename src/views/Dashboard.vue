@@ -354,11 +354,22 @@ onMounted(async () => {
           <div class="mt-4 text-base">
             <span class="flex gap-3 pb-2">
               <p class="">Name:</p>
-              <p class="font-semibold">Isogun Oluwakemi</p>
+              <p class="font-medium">
+                {{ userInformation.vehicle_assignee.lastName }}
+                {{ userInformation.vehicle_assignee.firstName }}
+              </p>
             </span>
             <span class="flex gap-3">
               <p class="">Staff ID:</p>
-              <p class="font-semibold">FUTA/STF/3910</p>
+              <p class="font-medium">
+                {{ userInformation.vehicle_assignee.staffId }}
+              </p>
+            </span>
+            <span class="flex gap-3 mt-2">
+              <p class="">Email:</p>
+              <p class="font-medium">
+                {{ userInformation.vehicle_assignee.email }}
+              </p>
             </span>
           </div>
         </div>
