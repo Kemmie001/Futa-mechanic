@@ -167,6 +167,7 @@ const showVehicleLogModal = () => {
               <p class="font-medium text-sm">Owner’s Name</p>
               <p class="text-gray5 text-sm">
                 {{ userInformation?.vehicle_assignee?.lastName }}
+                {{ userInformation?.vehicle_assignee?.firsttName }}
               </p>
             </span>
             <span class="flex flex-col gap-2 pb-2 mb-5">
@@ -175,7 +176,9 @@ const showVehicleLogModal = () => {
             </span>
             <span class="flex flex-col gap-2 pb-2 mb-5">
               <p class="font-medium text-sm">Staff ID</p>
-              <p class="text-gray5 text-sm">FUTA/STF/1010</p>
+              <p class="text-gray5 text-sm">
+                {{ userInformation.vehicle_assignee.staffId }}
+              </p>
             </span>
             <span class="flex flex-col gap-2 pb-2 mb-5">
               <p class="font-medium text-sm">Email Address</p>
