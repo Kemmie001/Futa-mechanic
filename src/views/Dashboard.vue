@@ -164,8 +164,8 @@ onMounted(async () => {
         >
           <h2 class="font-semibold text-primary5 text-xl">
             {{
-              userInformation.planned_maint.length
-                ? userInformation.planned_maint.length
+              userInformation?.planned_maint?.length
+                ? userInformation?.planned_maint?.length
                 : 0
             }}
           </h2>
@@ -177,7 +177,7 @@ onMounted(async () => {
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
           <h2 class="font-medium text-primary5 text-xl">
-            {{ userInformation.dashboard.current_location }}
+            {{ userInformation?.dashboard?.current_location }}
           </h2>
           <p class="font-medium text-sm text-primary">Current Location</p>
         </div>
@@ -185,7 +185,7 @@ onMounted(async () => {
           class="flex flex-col h-24 items-center justify-center bg-white rounded-md"
         >
           <h2 class="font-medium text-primary5 text-xl">
-            {{ userInformation.dashboard.total_mileage }}
+            {{ userInformation?.dashboard?.total_mileage }}
           </h2>
           <p class="font-medium text-sm text-primary">Total Mileage (km)</p>
         </div>
