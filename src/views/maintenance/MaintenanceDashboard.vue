@@ -78,9 +78,9 @@
           <tbody>
             <maintenanceRow
               v-for="(maintenance, index) in maintenanceList"
-              :concern="maintenance.concerns[0]"
+              :concern="maintenance.concerns"
               :id="'FUTAWORK' + index"
-              :proposed-date="maintenance?.proposedTime.toDateString"
+              :proposed-date="maintenance?.proposedDate?.toDateString"
               :status="'Pending'"
               :m="maintenance?._id"
             />

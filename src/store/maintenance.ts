@@ -14,10 +14,10 @@ export interface AllPlannedMaintenance {
 export interface AllPlannedMaint {
   __v: number;
   _id: string;
-  concerns: string[];
+  concerns: string;
   createdAt: Date;
   plannedBy: string;
-  proposedTime: Date;
+  proposedDate: Date;
   services: string[];
   updatedAt: Date;
   vehicle: string;

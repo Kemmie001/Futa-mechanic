@@ -2,15 +2,55 @@
 import { ref } from "vue";
 import modal from "./index.vue";
 import { defineProps } from "vue";
-const props = defineProps(["open", "close", "showActionsModal", "id"]);
+import { addDriversLog } from "@/service/endpoints";
+import { useErrorInfo } from "@/store/error";
+import { useDriverLog } from "@/store/drivers_log";
+const props = defineProps([
+  "open",
+  "close",
+  "showActionsModal",
+  "vehicle",
+  "id",
+]);
 const form = ref({
-  log: "morningLog",
-  startOdometer: "",
-  endOdometer: "",
-  fuelLevel: 0,
-  fuelUsed: "",
+  vehicle_id: "",
+  logTime: "morning",
+  startingMileage: "",
+  endingMilage: "",
+  startingFuelLevel: "",
+  endingFuelLevel: "",
 });
-const vehicleLog = () => {};
+const roller = ref(false);
+const customError = useErrorInfo();
+const vehicleLog = async () => {
+  try {
+    roller.value = true;
+    form.value.vehicle_id = props.vehicle;
+    // console.log(props.vehicle);
+    const { data } = await addDriversLog(form.value);
+    customError.updateErrorMsg(data.msg, true);
+
+    form.value.logTime = "";
+    form.value.startingMileage = "";
+    form.value.endingMilage = "";
+    form.value.endingFuelLevel = "";
+    form.value.startingFuelLevel = "";
+  } catch (e) {
+    const error = e as any;
+    console.log(error);
+    customError.updateErrorMsg(
+      error?.response?.data?.err ?? "An error occurred",
+      false
+    );
+  } finally {
+    roller.value = false;
+    useDriverLog().getAllDriversLog({
+      start_date: "",
+      end_date: "",
+    });
+    props.close();
+  }
+};
 </script>
 <template>
   <modal :open="props.open" :close="props.close" class="overflow-y-hidden">
@@ -30,15 +70,15 @@ const vehicleLog = () => {};
             </span>
             <select
               name="logTimee"
-              v-model="form.log"
+              v-model="form.logTime"
               id="service"
               class="form-field"
             >
-              <option value="morningLog">Morning Log</option>
-              <option value="eveningLog">Evening Log</option>
+              <option value="morning">Morning Log</option>
+              <option value="evening">Evening Log</option>
             </select>
           </div>
-          <div v-if="form.log === 'morningLog'" class="">
+          <div v-if="form.logTime === 'morning'" class="">
             <div class="form-input2">
               <span class="flex gap-1">
                 <label for="sOdometer">Starting Odometer</label>
@@ -47,7 +87,7 @@ const vehicleLog = () => {};
                 class="form-field"
                 type="number"
                 name="sOdometer"
-                v-model="form.startOdometer"
+                v-model="form.startingMileage"
                 required
               />
             </div>
@@ -59,7 +99,7 @@ const vehicleLog = () => {};
                 class="form-field"
                 type="number"
                 name="fLevel"
-                v-model="form.fuelLevel"
+                v-model="form.startingFuelLevel"
                 required
               />
             </div>
@@ -73,7 +113,7 @@ const vehicleLog = () => {};
                 class="form-field"
                 type="number"
                 name="eOdometer"
-                v-model="form.endOdometer"
+                v-model="form.endingMilage"
                 required
               />
             </div>
@@ -85,16 +125,18 @@ const vehicleLog = () => {};
                 class="form-field"
                 type="number"
                 name="fUsed"
-                v-model="form.fuelUsed"
+                v-model="form.endingFuelLevel"
                 required
               />
             </div>
           </div>
           <button
+            :disabled="roller"
             type="submit"
-            class="w-full mt-5 py-3 flex btn-primary items-center justify-center gap-2"
+            class="w-full mt-8 py-3 flex btn-primary items-center justify-center gap-2"
+            :class="[roller ? 'opacity-75' : '']"
           >
-            <!-- <div class="animate-spin roller"></div> -->
+            <div v-if="roller" class="animate-spin roller"></div>
             Submit
           </button>
         </form>

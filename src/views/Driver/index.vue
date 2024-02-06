@@ -10,32 +10,36 @@ const roller = ref(false);
 const userInformation = computed(() => {
   return userInfo().userData;
 });
+const vehicleLogs = computed(() => {
+  return useDriverLog().allDriversLog;
+});
 onMounted(async () => {
   if (!Object.keys(userInformation.value).length) {
     roller.value = true;
     await userInfo().fetchUserProfile();
     roller.value = false;
   }
-  useDriverLog().getAllDriversLog({
-    start_date: "",
-    end_date: "",
-  });
+  if (!Object.keys(vehicleLogs.value).length) {
+    useDriverLog().getAllDriversLog({
+      start_date: "",
+      end_date: "",
+    });
+  }
 });
 const openVehicleLogModal = ref(false);
 const showVehicleLogModal = () => {
   openVehicleLogModal.value = !openVehicleLogModal.value;
 };
+// const vehicleData = computed(() => {
+//   return userInformation.value?.user_vehicle;
+// });
 </script>
 
 <template>
   <div class="px-5 md:px-8">
     <div class="flex mt-8 justify-between items-center">
       <h2 class="text-3xl font-semibold">Vehicle Log</h2>
-      <button
-        v-if="userInformation?.loggedInUser?.role === 'driver'"
-        @click="showVehicleLogModal"
-        class="btn-primary py-3 px-5"
-      >
+      <button @click="showVehicleLogModal" class="btn-primary py-3 px-5">
         Vehicle Log
       </button>
     </div>
@@ -79,16 +83,15 @@ const showVehicleLogModal = () => {
               <th class="font-medium text-sm py-2 text-left">Fuel Used</th>
             </tr>
           </thead>
-
           <tbody>
             <DriverLog
-              v-for="(log, index) in logList"
-              :dateStr="log.date"
-              :fuelLevel="log.fuelLevel"
-              :startingOdometer="log.startingOdometer"
-              :endingOdometer="log.endingOdometer"
-              :id="log.id"
-              :fuelUsed="log.fuelUsed"
+              v-for="(log, index) in vehicleLogs?.dailyLogs"
+              :dateStr="log.createdAt"
+              :fuelLevel="log.endingFuelLevel"
+              :startingOdometer="log.startingMileage"
+              :endingOdometer="log.endingMileage"
+              :id="log._id"
+              :fuelUsed="log.startingFuelLevel"
             />
           </tbody>
         </table>
@@ -141,12 +144,17 @@ const showVehicleLogModal = () => {
             </span>
             <span class="flex flex-col gap-2 pb-2 mb-5">
               <p class="font-medium text-sm">Driver’s License Number</p>
-              <!-- <p class="text-gray5 text-sm">{{userInformation?.assigned_driver?.}}</p> -->
+              <!--  <p class="text-gray5 text-sm">
+                {{userInformation?.assigned_driver?.}}
+              </p>  -->
             </span>
           </div>
         </div>
       </div>
-      <div v-else class="px-4 md:w-5/12 rounded-md bg-primaryI py-5">
+      <div
+        v-if="userInformation?.loggedInUser?.role === 'driver'"
+        class="px-4 md:w-5/12 rounded-md bg-primaryI py-5"
+      >
         <h2 class="text-black text-lg font-semibold">Vehicle Owner</h2>
         <div
           class="md:-mt-10 flex items-center justify-center h-full text-center text-sm"
@@ -177,7 +185,7 @@ const showVehicleLogModal = () => {
             <span class="flex flex-col gap-2 pb-2 mb-5">
               <p class="font-medium text-sm">Staff ID</p>
               <p class="text-gray5 text-sm">
-                {{ userInformation.vehicle_assignee.staffId }}
+                {{ userInformation?.vehicle_assignee?.staffId }}
               </p>
             </span>
             <span class="flex flex-col gap-2 pb-2 mb-5">
@@ -195,6 +203,7 @@ const showVehicleLogModal = () => {
     <VehicleLogModaal
       :close="showVehicleLogModal"
       :open="openVehicleLogModal"
+      :vehicle="userInformation?.user_vehicle?._id"
     />
   </div>
 </template>

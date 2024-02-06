@@ -31,7 +31,7 @@ http.interceptors.response.use(
   (err: any) => {
     if (err instanceof AxiosError) {
       if (err?.response?.status == 401) {
-        window.location.href = "/auth/login";
+        window.location.href = "/login";
         //delete token redirect to login
         // or
         //if implemented refresh token, try to obtain a new token if ref token is invalid

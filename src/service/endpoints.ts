@@ -28,12 +28,12 @@ export const setUser = (data: any) => {
 };
 
 export function getUser() {
-  return http.get("/user/find-user");
+  return http.post("/user/find-user");
 }
 
 // Vehicle
 export function getUserVehicle() {
-  return http.get("/vehicle/user-vehicle");
+  return http.post("/vehicle/user-vehicle");
 }
 // Plan maintenance
 export function planMaintenance(data: object) {
@@ -56,4 +56,7 @@ export function fetchAllPlannedMaintenance(data: object) {
 // Driver
 export function fetchAllDriversLog(data: object) {
   return http.post("/drivers-log/all-logs", data);
+}
+export function addDriversLog(data: object) {
+  return http.post("/drivers-log/new-log", data);
 }
