@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
+import moment from "moment";
 const currentPage = ref("feedback-page");
 const switchPage = (page: string) => {
   currentPage.value = page;
@@ -25,6 +26,7 @@ const selectImage = (input: any) => {
     reader.readAsDataURL(files[0]);
   }
 };
+const props = defineProps(["maintenance"]);
 </script>
 
 <template>
@@ -61,36 +63,33 @@ const selectImage = (input: any) => {
               <p class="text-sm text-gray5">Services</p>
               <div class="flex flex-wrap gap-4 my-2">
                 <span
+                  v-for="(service, index) in maintenance?.maint_log?.services"
+                  :key="index"
                   class="bg-primaryI px-2 py-1 text-primary text-sm rounded-2xl"
-                  >Pump Tyre</span
-                >
-                <span
-                  class="bg-primaryI px-2 py-1 text-primary text-sm rounded-2xl"
-                  >Change Battery</span
-                >
-                <span
-                  class="bg-primaryI px-2 py-1 text-primary text-sm rounded-2xl"
-                  >Oil Change</span
+                  >{{ service }}</span
                 >
               </div>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
               <p class="text-sm text-gray5 pb-1">Concerns</p>
               <p class="text-base text-primary9 pb-2">
-                Lorem ipsum avec sont tues cest istum Lorem ipsum avec sont tues
-                cest istum orem ipsum avec sont tues cest istum tr
+                {{ maintenance?.maint_log?.concerns }}
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
               <p class="text-sm text-gray5">Mileage (kilometer)</p>
               <p class="text-base text-primary9 pb-2">
-                1200 km
+                {{ maintenance?.maint_log?.vehicle?.service_mileage }} km
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
               <p class="text-sm text-gray5 pb-1">Maintenance Date</p>
               <p class="text-base text-primary9 pb-2">
-                Friday, Nov 10, 2023
+                {{
+                  moment(maintenance?.maint_log?.proposedDate).format(
+                    "D MMM YYYY"
+                  )
+                }}
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -111,34 +110,90 @@ const selectImage = (input: any) => {
             <ul class="flex flex-col my-5">
               <li class="flex gap-4 items-center">
                 <span
-                  class="flex justify-center bg-primary text-white font-medium text-md items-center w-10 h-10 rounded-full"
+                  :class="[
+                    maintenance?.maint_log?.status === 'pending'
+                      ? 'bg-primary text-white'
+                      : 'bg-primaryI text-primary',
+                  ]"
+                  class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                   >1
                 </span>
-                <p class="text-primary font-medium text-md">Pending</p>
+                <p
+                  class="font-medium text-md"
+                  :class="[
+                    maintenance?.maint_log?.status === 'pending'
+                      ? 'text-primary '
+                      : 'text-dark',
+                  ]"
+                >
+                  Pending
+                </p>
               </li>
               <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
               <li class="flex gap-4 items-center">
                 <span
-                  class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                  :class="[
+                    maintenance?.maint_log?.status === 'in-shop'
+                      ? 'bg-primary text-white'
+                      : 'bg-primaryI text-primary',
+                  ]"
+                  class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                   >2
                 </span>
-                <p class="text-dark text-md font-medium">In shop</p>
+                <p
+                  :class="[
+                    maintenance?.maint_log?.status === 'in-shop'
+                      ? 'text-primary '
+                      : 'text-dark',
+                  ]"
+                  class="text-md font-medium"
+                >
+                  In shop
+                </p>
               </li>
               <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
               <li class="flex gap-4 items-center">
                 <span
-                  class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                  :class="[
+                    maintenance?.maint_log?.status === 'in-progress'
+                      ? 'bg-primary text-white'
+                      : 'bg-primaryI text-primary',
+                  ]"
+                  class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                   >3
                 </span>
-                <p class="text-dark text-md font-medium">In Progress</p>
+                <p
+                  class="text-md font-medium"
+                  :class="[
+                    maintenance?.maint_log?.status === 'in-progress'
+                      ? 'text-primary '
+                      : 'text-dark',
+                  ]"
+                >
+                  In Progress
+                </p>
               </li>
               <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
               <li class="flex gap-4 items-center">
                 <span
-                  class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                  :class="[
+                    maintenance?.maint_log?.status === 'completed'
+                      ? 'bg-primary text-white'
+                      : 'bg-primaryI text-primary',
+                  ]"
+                  class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                   >4
                 </span>
-                <p class="text-dark text-md font-medium">Completed</p>
+                <p
+                  :class="[
+                    maintenance?.maint_log?.status === 'completed'
+                      ? 'text-primary '
+                      : 'text-dark',
+                  ]"
+                  class="text-md font-medium"
+                >
+                  Completed
+                </p>
               </li>
             </ul>
           </div>
@@ -220,15 +275,16 @@ const selectImage = (input: any) => {
           <div class="border border-[#E4E7EC] w-full rounded-md">
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
               <p class="text-primary font-medium text-md pb-1">
-                Isogun Oluwakemi
+                {{ maintenance?.maint_log?.plannedBy?.lastName }}
+                {{ maintenance?.maint_log?.plannedBy?.firstName }}
               </p>
               <p class="text-sm text-gray5 pb-2">
-                Vehicle Owner
+                {{ maintenance?.maint_log?.plannedBy?.role }}
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
               <p class="text-primary font-medium text-md pb-1">
-                FUTA/STF/3910
+                {{ maintenance?.maint_log?.plannedBy?.staffId }}
               </p>
               <p class="text-sm text-gray5 pb-2">
                 Staff ID
@@ -236,7 +292,7 @@ const selectImage = (input: any) => {
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
               <p class="text-primary font-medium text-md pb-1">
-                isogunoluwakemi@gmail.com
+                {{ maintenance?.maint_log?.plannedBy?.email }}
               </p>
               <p class="text-sm text-gray5 pb-2">
                 Email Address
@@ -244,7 +300,7 @@ const selectImage = (input: any) => {
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
               <p class="text-primary font-medium text-md pb-1">
-                08032675492
+                0{{ maintenance?.maint_log?.plannedBy?.phone }}
               </p>
               <p class="text-sm text-gray5 pb-2">
                 Phone Number
@@ -267,7 +323,8 @@ const selectImage = (input: any) => {
                 Vehicle Brand
               </p>
               <p class="text-gray9 text-md pb-2">
-                2024 Mercedes Benz GLC
+                {{ maintenance?.maint_log?.vehicle?.manufacture_year }}
+                {{ maintenance?.maint_log?.vehicle?.vehicle_name }}
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -275,7 +332,7 @@ const selectImage = (input: any) => {
                 Plate Number
               </p>
               <p class="text-gray9 text-md pb-2">
-                AKR-2076540
+                {{ maintenance?.maint_log?.vehicle?.plate_no }}
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -283,7 +340,7 @@ const selectImage = (input: any) => {
                 Engine Number
               </p>
               <p class="text-gray9 text-md pb-2">
-                PJ12345U123456P
+                {{ maintenance?.maint_log?.vehicle?.engine_no }}
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -291,7 +348,7 @@ const selectImage = (input: any) => {
                 Fuel Type
               </p>
               <p class="text-gray9 text-md pb-2">
-                Petrol
+                {{ maintenance?.maint_log?.vehicle?.fuel_type }}
               </p>
             </div>
             <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -299,7 +356,7 @@ const selectImage = (input: any) => {
                 Chassis Number
               </p>
               <p class="text-gray9 text-md pb-2">
-                SV30-0169266
+                {{ maintenance?.maint_log?.vehicle?.chasis_no }}
               </p>
             </div>
           </div>

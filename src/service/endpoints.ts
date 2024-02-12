@@ -46,13 +46,24 @@ export function editPlanMaintenance(data: object) {
 
 // fetch all maintenance
 export function fetchAllMaintenance() {
-  return http.get("/maint-log/all-maint-log");
+  return http.post("/maint-log/all-maint-log");
 }
 // fetch all plan maintenance
 export function fetchAllPlannedMaintenance(data: object) {
   return http.post("/maint-log/all-planned-maint", data);
 }
-
+export function fetchPlannedMaintenance(data: string) {
+  return http.post(`/maint-log/all-planned-maint/${data}`);
+}
+export function fetchAllVehiclePlannedMaintenance(data: object) {
+  return http.post("/maint-log/all-vehicles-planned-maint", data);
+}
+export function addFeedback(data: object) {
+  return http.patch("/maint-log/maintenance-feedback", data);
+}
+export function changeStatus(data: object) {
+  return http.patch("/maint-log/update-maint-status", data);
+}
 // Driver
 export function fetchAllDriversLog(data: object) {
   return http.post("/drivers-log/all-logs", data);

@@ -2,6 +2,7 @@ import { getUser, getUserVehicle } from "@/service/endpoints";
 import { defineStore } from "pinia";
 import { useErrorInfo } from "./error";
 import { regInfo } from "./register";
+import { useMaintenance } from "./maintenance";
 // import { ProfileDetails, userDetails } from "@/interfaces/profileInfo";
 
 export interface userDetails {
@@ -85,7 +86,18 @@ export const userInfo = defineStore("profile", {
         const { data } = await getUser();
         this.userData = data;
         regInfo().updateUserData(data.loggedInUser);
-        console.log(this.userData);
+        if (this.userData.loggedInUser.role === "maintenance_personnel") {
+          await useMaintenance().getAllVehiclesPlannedMaintenance({
+            start_date: "",
+            end_date: "",
+          });
+        } else {
+          await useMaintenance().getAllPlannedMaintenance({
+            vehicle: this.userData?.user_vehicle?._id,
+            start_date: "",
+            end_date: "",
+          });
+        }
       } catch (e) {
         const error = e as any;
         console.log(error);

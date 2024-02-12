@@ -27,10 +27,10 @@
         <p
           class="text-xs"
           :class="[
-            { 'text-[#CB1A14]': props.status === 'Pending' },
-            { 'text-[#DD900D]': props.status === 'In Shop' },
-            { 'text-[#664101]': props.status === 'In Progress' },
-            { 'text-[#0F973D]': props.status === 'Completed' },
+            { 'text-[#CB1A14]': props.status === 'pending' },
+            { 'text-[#DD900D]': props.status === 'in-shop' },
+            { 'text-[#664101]': props.status === 'in-progress' },
+            { 'text-[#0F973D]': props.status === 'completed' },
           ]"
         >
           {{ props.status }}

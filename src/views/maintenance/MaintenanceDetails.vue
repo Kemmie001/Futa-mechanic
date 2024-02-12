@@ -6,36 +6,31 @@ import MaintenanceDetails from "@/views/maintenance/MaintenancePersonnel/Mainten
 import { useErrorInfo } from "@/store/error";
 import { useMaintenance } from "@/store/maintenance";
 import moment from "moment";
+import AcceptMaintenance from "@/components/Modal/AcceptMaintenance.vue";
 const router = useRouter();
 const route = useRoute();
 const userInformation = computed(() => {
   return userInfo().userData;
 });
 const maintenance = computed(() => {
-  const maint = useMaintenance().allPlannedMaintenance.allPlannedMaint;
-  if (maint) {
-    const result = maint.filter(
-      (maintenance) => maintenance._id === route.params.slug
-    );
-    return result[0];
-  }
+  const maint = useMaintenance().plannedMaintenance;
+  // if (maint) {
+  //   const result = maint.filter(
+  //     (maintenance) => maintenance._id === route.params.slug
+  //   );
+  //   return result[0];
+  // }
+  return maint;
 });
 const customError = useErrorInfo();
 const roller = ref(false);
 onMounted(async () => {
-  if (!Object.keys(userInformation.value).length) {
-    await userInfo().fetchUserProfile();
-  }
-  if (!maintenance.value) {
-    roller.value = true;
-    await useMaintenance().getAllPlannedMaintenance({
-      vehicle: userInformation.value.user_vehicle._id,
-      start_date: "",
-      end_date: "",
-    });
-    roller.value = false;
-  }
+  useMaintenance().getPlannedMaintenance(route.params.slug);
 });
+const openAccept = ref(false);
+const showAcceptModal = () => {
+  openAccept.value = !openAccept.value;
+};
 </script>
 
 <template>
@@ -57,7 +52,7 @@ onMounted(async () => {
     <div class="flex justify-between items-center">
       <span class="flex flex-col">
         <h3 class="text-primary9 font-semibold text-2xl">
-          #{{ route.params.slug }}
+          #{{ maintenance?.maint_log?.maint_id }}
         </h3>
         <p class="text-lg text-gray6 font-light">Maintenance ID</p>
       </span>
@@ -68,8 +63,12 @@ onMounted(async () => {
         Export
       </button>
       <button
-        v-else
+        v-if="
+          userInformation?.loggedInUser?.role === 'maintenance_personnel' &&
+          maintenance?.maint_log?.status === 'pending'
+        "
         class="border border-primary px-3 py-2 rounded-md text-primary"
+        @click="showAcceptModal"
       >
         Accept work
       </button>
@@ -84,7 +83,7 @@ onMounted(async () => {
             <p class="text-sm text-gray5">Services</p>
             <div class="flex flex-wrap gap-4 my-2">
               <span
-                v-for="(service, index) in maintenance?.services"
+                v-for="(service, index) in maintenance?.maint_log?.services"
                 :key="index"
                 class="bg-primaryI px-2 py-1 text-primary text-sm rounded-2xl"
                 >{{ service }}</span
@@ -94,7 +93,7 @@ onMounted(async () => {
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5 pb-1">Concerns</p>
             <p class="text-base text-primary9 pb-2">
-              {{ maintenance?.concerns[0] }}
+              {{ maintenance?.maint_log?.concerns }}
             </p>
           </div>
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -106,7 +105,11 @@ onMounted(async () => {
           <div class="border-b border-[#F7F9FC] px-4 pt-4">
             <p class="text-sm text-gray5 pb-1">Maintenance Date</p>
             <p class="text-base text-primary9 pb-2">
-              {{ moment(maintenance?.proposedTime).format("D MMM YYYY") }}
+              {{
+                moment(maintenance?.maint_log?.proposedDate).format(
+                  "D MMM YYYY"
+                )
+              }}
             </p>
           </div>
           <!-- <div class="border-b border-[#F7F9FC] px-4 pt-4">
@@ -127,34 +130,90 @@ onMounted(async () => {
           <ul class="flex flex-col my-5">
             <li class="flex gap-4 items-center">
               <span
-                class="flex justify-center bg-primary text-white font-medium text-md items-center w-10 h-10 rounded-full"
+                :class="[
+                  maintenance?.maint_log?.status === 'pending'
+                    ? 'bg-primary text-white'
+                    : 'bg-primaryI text-primary',
+                ]"
+                class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                 >1
               </span>
-              <p class="text-primary font-medium text-md">Pending</p>
+              <p
+                class="font-medium text-md"
+                :class="[
+                  maintenance?.maint_log?.status === 'pending'
+                    ? 'text-primary '
+                    : 'text-dark',
+                ]"
+              >
+                Pending
+              </p>
             </li>
             <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
             <li class="flex gap-4 items-center">
               <span
-                class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                :class="[
+                  maintenance?.maint_log?.status === 'in-shop'
+                    ? 'bg-primary text-white'
+                    : 'bg-primaryI text-primary',
+                ]"
+                class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                 >2
               </span>
-              <p class="text-dark text-md font-medium">In shop</p>
+              <p
+                :class="[
+                  maintenance?.maint_log?.status === 'in-shop'
+                    ? 'text-primary '
+                    : 'text-dark',
+                ]"
+                class="text-md font-medium"
+              >
+                In shop
+              </p>
             </li>
             <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
             <li class="flex gap-4 items-center">
               <span
-                class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                :class="[
+                  maintenance?.maint_log?.status === 'in-progress'
+                    ? 'bg-primary text-white'
+                    : 'bg-primaryI text-primary',
+                ]"
+                class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                 >3
               </span>
-              <p class="text-dark text-md font-medium">In Progress</p>
+              <p
+                class="text-md font-medium"
+                :class="[
+                  maintenance?.maint_log?.status === 'in-progress'
+                    ? 'text-primary '
+                    : 'text-dark',
+                ]"
+              >
+                In Progress
+              </p>
             </li>
             <li class="h-6 w-20 border-l border-primaryI ml-5"></li>
             <li class="flex gap-4 items-center">
               <span
-                class="flex justify-center bg-primaryI text-primary font-medium text-md items-center w-10 h-10 rounded-full"
+                :class="[
+                  maintenance?.maint_log?.status === 'completed'
+                    ? 'bg-primary text-white'
+                    : 'bg-primaryI text-primary',
+                ]"
+                class="flex justify-center font-medium text-md items-center w-10 h-10 rounded-full"
                 >4
               </span>
-              <p class="text-dark text-md font-medium">Completed</p>
+              <p
+                :class="[
+                  maintenance?.maint_log?.status === 'completed'
+                    ? 'text-primary '
+                    : 'text-dark',
+                ]"
+                class="text-md font-medium"
+              >
+                Completed
+              </p>
             </li>
           </ul>
         </div>
@@ -168,7 +227,8 @@ onMounted(async () => {
             <li class="flex flex-col gap-2">
               <p class="text-md font-medium text-[#101928]">Vehicle Type:</p>
               <p class="text-sm text-gray5 font-normal">
-                {{ userInformation.user_vehicle.vehicle_name }}
+                {{ maintenance?.maint_log?.vehicle?.manufacture_year }}
+                {{ maintenance?.maint_log?.vehicle?.vehicle_name }}
               </p>
             </li>
             <li class="flex flex-col gap-2">
@@ -202,7 +262,8 @@ onMounted(async () => {
       </div>
     </div>
     <div v-else class="md:flex gap-2 mt-5">
-      <MaintenanceDetails />
+      <MaintenanceDetails :maintenance="maintenance" />
+      <AcceptMaintenance :open="openAccept" :close="showAcceptModal" />
     </div>
   </div>
 </template>
