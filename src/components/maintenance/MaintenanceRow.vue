@@ -23,9 +23,9 @@
       <p class="text-xs w-40 lg:w-full">{{ props.personnel }}</p>
     </td>
     <td class="table__status text-center">
-      <div class="flex items-center gap-2 w-36 lg:w-full font-bold">
+      <div class="flex items-center gap-2 w-36 lg:w-full font-medium">
         <p
-          class="text-xs"
+          class="text-xs capitalize"
           :class="[
             { 'text-[#CB1A14]': props.status === 'pending' },
             { 'text-[#DD900D]': props.status === 'in-shop' },
@@ -48,7 +48,7 @@ const router = useRouter();
 const props = defineProps({
   id: String,
   concern: String,
-  proposedDate: String,
+  proposedDate: Date,
   personnel: String,
   status: String,
   m: String,

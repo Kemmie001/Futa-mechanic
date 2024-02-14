@@ -83,8 +83,8 @@
               <maintenanceRow
                 v-for="(maintenance, index) in maintenanceList"
                 :concern="maintenance.concerns"
-                :id="'FUTAWORK' + index"
-                :proposed-date="maintenance?.proposedDate?.toDateString"
+                :id="maintenance.maint_id"
+                :proposed-date="maintenance?.proposedDate"
                 :status="maintenance?.status"
                 :m="maintenance?._id"
               />
@@ -140,7 +140,7 @@
                 v-for="(maintenance, index) in allVehicleMaintenanceList"
                 :concern="maintenance.concerns"
                 :id="maintenance.maint_id"
-                :proposed-date="maintenance?.proposedDate?.toDateString"
+                :proposed-date="maintenance?.proposedDate"
                 :status="maintenance?.status"
                 :m="maintenance?._id"
               />

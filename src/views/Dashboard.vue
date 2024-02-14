@@ -3,13 +3,28 @@ import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
 import { BarChart, useBarChart } from "vue-chart-3";
 import { DoughnutChart, useDoughnutChart } from "vue-chart-3";
 import { computed, onMounted, ref } from "vue";
-import { maintenanceList } from "../composables/maintenances";
 import { regInfo } from "@/store/register";
 import { userInfo } from "@/store/user";
 import { useRouter } from "vue-router";
+import { useMaintenance } from "@/store/maintenance";
+import moment from "moment";
 type FILTEMODE = "ALLTIME" | "MONTH" | "YEAR";
 
 const filterMode = ref<FILTEMODE>("MONTH");
+const allVehicleMaintenanceList = computed(() => {
+  // const index = currentPage.value * itemsPerPage.value - itemsPerPage.value;
+  const maint = useMaintenance()?.allVehiclePlannedMaintenance
+    ?.allVehiclesPlannedMaint;
+  // if (maint) {
+  //   return maint.filter((maintenance) =>
+  //     maintenance.concerns
+  //       .toLowerCase()
+  //       .includes(searchMaint.value.toLowerCase())
+  //   );
+  // } else {
+  return maint;
+  // }
+});
 
 Chart.register(...registerables);
 const data = ref([
@@ -214,20 +229,20 @@ onMounted(async () => {
         <div
           class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">0124</h2>
-          <p class="font-medium text-sm text-primary">Work Order</p>
+          <h2 class="font-semibold text-primary5 text-xl">04</h2>
+          <p class="font-medium text-sm text-primary">Completed Order</p>
         </div>
         <div
           class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">0124</h2>
-          <p class="font-medium text-sm text-primary">Work Order</p>
+          <h2 class="font-semibold text-primary5 text-xl">04</h2>
+          <p class="font-medium text-sm text-primary">Ongoing Order</p>
         </div>
         <div
           class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
         >
-          <h2 class="font-semibold text-primary5 text-xl">0124</h2>
-          <p class="font-medium text-sm text-primary">Work Order</p>
+          <h2 class="font-semibold text-primary5 text-xl">10</h2>
+          <p class="font-medium text-sm text-primary">Pending Order</p>
         </div>
         <div
           class="flex flex-col h-24 items-center border border-primary justify-center bg-white rounded-md"
@@ -258,7 +273,7 @@ onMounted(async () => {
         <BarChart class="my-5" v-bind="barChartProps" />
       </div>
     </div>
-    <div class="lg:w-5/12 bg-primaryI py-10 px-6">
+    <div class="lg:w-5/12 bg-primaryI py-5 px-6">
       <div class="text-right w-full"></div>
       <div
         v-if="userInformation?.loggedInUser?.role === 'vehicle_assignee'"
@@ -417,21 +432,25 @@ onMounted(async () => {
 
               <tbody>
                 <tr
-                  v-for="maintenance in maintenanceList"
-                  :key="maintenance.id"
+                  v-for="maintenance in allVehicleMaintenanceList"
+                  :key="maintenance?._id"
                   @click="
                     router.push({
                       name: 'maintenanceSlug',
-                      params: { slug: maintenance.id },
+                      params: { slug: maintenance?._id },
                     })
                   "
                   class="hover:bg-[#E4E7EC] border-b border-[#E4E7EC] cursor-pointer"
                 >
                   <td class="table__image py-3 px-2">
-                    <p class="text-xs w-32">#{{ maintenance.id }}</p>
+                    <p class="text-xs w-32">#{{ maintenance?.maint_id }}</p>
                   </td>
                   <td class="table__date">
-                    <p class="text-xs w-[220px] lg:w-full">26/01/2024</p>
+                    <p class="text-xs w-[220px] lg:w-full">
+                      {{
+                        moment(maintenance?.proposedDate).format("D MMM YYYY")
+                      }}
+                    </p>
                   </td>
                 </tr>
               </tbody>

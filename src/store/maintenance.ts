@@ -16,6 +16,7 @@ export interface AllPlannedMaintenance {
 export interface AllPlannedMaint {
   __v: number;
   _id: string;
+  maint_id: string;
   concerns: string;
   createdAt: Date;
   plannedBy: string;
