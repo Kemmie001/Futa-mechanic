@@ -1,4 +1,4 @@
-# karpah
+# futa mechanic
 
 ## Project setup
 ```
